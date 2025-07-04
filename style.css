@@ -1,4 +1,4 @@
-:root {
+/*:root {
     --primary: #4361ee;
     --secondary: #3a0ca3;
     --success: #06d6a0;
@@ -71,15 +71,15 @@ nav {
 }
 
 nav a {
-  color: #fff;
-  text-decoration: none;
-  font-weight: 750;
-  transition: 0.3s;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 0.8rem;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #958a8a;
+    text-decoration: none;
+    font-weight: 750;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.8rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 nav a:hover {
@@ -99,9 +99,11 @@ nav a:hover {
         grid-template-columns: 1fr;
     }
 }
-.ah1p{
-    margin-right:16pc
+
+.ah1p {
+    margin-right: 16pc
 }
+
 /* Ad panel styles */
 .ad-panel {
     background: var(--card-bg);
@@ -111,6 +113,20 @@ nav a:hover {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.08);
     margin-top: 1pc;
+}
+
+.ad-panel-side-temp {
+    background: blue;
+    border-radius: 12px;
+    padding: 20px;
+    padding-top: 20px;
+    margin: 30px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding-top: 2pc;
+}
 }
 
 .ad-title {
@@ -140,33 +156,48 @@ nav a:hover {
     padding: 20px;
     color: var(--gray);
     font-weight: 500;
+
 }
+
+.ad-content-side-temp {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: var(--gray);
+    font-weight: 500;
+
+}
+
 .ad-content-h1 {
-border-radius: 8px;
-  min-height: 250px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+    border-radius: 8px;
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .font-add-h1 {
-font-family: 'Inter', sans-serif;
-  font-size: 3rem;
-  font-weight: 700;
-  color: #cce6ff;
-  text-align: center;
-  letter-spacing: 0.5px;
-  background: linear-gradient(90deg, #24c0ff, #05ffa1);
+    font-family: 'Inter', sans-serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: #cce6ff;
+    text-align: center;
+    letter-spacing: 0.5px;
+    background: linear-gradient(90deg, #24c0ff, #05ffa1);
     background-clip: border-box;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-bottom: 10px;
-  padding-right: 15pc;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 10px;
 }
 
-.ad-content.small {
-    min-height: 120px;
+.ad-content-small {
+    min-height: 150px;
 }
 
 .ad-content.vertical {
@@ -192,14 +223,10 @@ font-family: 'Inter', sans-serif;
 }
 
 .email-generator-p {
- font-size: 1.0pc;
+font-size: 1.0pc;
   display: flex;
   align-items: center;
   gap: 10px;
-  color: #fff;
-  width: 56pc;
-  margin-left: 30px;
-  padding-right: 29pc;
 }
 
 .email-p {
@@ -264,7 +291,7 @@ button:hover {
 }
 
 #generate-btn {
-    background: linear-gradient(90deg, var(--secondary), var(--primary));
+   background: black;
     font-size: 1.1rem;
     padding: 15px 35px;
 }
@@ -278,9 +305,11 @@ button:hover {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.08);
 }
-.ab-margin{
+
+.ab-margin {
     margin: 1pc;
 }
+
 .inbox-header {
     display: flex;
     justify-content: space-between;
@@ -479,6 +508,12 @@ footer {
     font-weight: bold;
 }
 
+.premium-btn-side-temp {
+    background: #fff;
+    color: #000;
+    font-weight: bold;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     header {
@@ -567,4 +602,270 @@ footer {
     letter-spacing: 1px;
     margin-bottom: 5px;
     text-align: center;
+}
+*/
+
+/* Updated and responsive CSS for TempMailsPro */
+
+:root {
+  --primary: #4361ee;
+  --secondary: #3a0ca3;
+  --success: #06d6a0;
+  --warning: #ffd166;
+  --danger: #ef476f;
+  --dark: #121212;
+  --darker: #0d0d0d;
+  --light: #f8f9fa;
+  --gray: #8c98a4;
+  --card-bg: #1a1a1a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, var(--darker), #1a1a2e);
+  color: var(--light);
+  line-height: 1.6;
+  min-height: 100vh;
+  background-attachment: fixed;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(13, 13, 13, 0.95);
+  backdrop-filter: blur(10px);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.logo i {
+  font-size: 2rem;
+  color: var(--primary);
+}
+
+.logo h1 {
+  font-size: 1.8rem;
+  background: black;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+nav a {
+  background-color: ;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: 0.3s;
+}
+
+nav a:hover {
+  color: var(--primary);
+}
+
+.hero {
+  padding: 40px 0;
+  text-align: center;
+}
+
+.font-add-h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  background: black;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 10px;
+}
+
+.email-generator-p {
+ color:black;
+  font-size: 1.1rem;
+  padding-left: 12pc;
+  padding-right: 12pc;
+}
+
+.main-content {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 20px;
+}
+
+@media (max-width: 900px) {
+  .main-content {
+    grid-template-columns: 1fr;
+  }
+}
+
+.email-generator,
+.inbox,
+.email-view,
+.stat-card,
+.ad-panel,
+.premium-banner {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.email-display {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 15px;
+  border-radius: 10px;
+}
+
+#generated-email {
+  font-size: 1.3rem;
+  font-family: monospace;
+  word-break: break-word;
+}
+
+button {
+  background: black;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 2px solid var(--primary);
+}
+
+.email-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+}
+
+.email-item:hover {
+  background: rgba(67, 97, 238, 0.1);
+}
+
+.stats-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.stat-card {
+  text-align: center;
+}
+
+.stat-number {
+  font-size: 2rem;
+ background: black;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+footer {
+  text-align: center;
+  color: var(--gray);
+  padding: 30px 0;
+  font-size: 0.9rem;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.footer-links a {
+  color: var(--gray);
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  color: var(--primary);
+}
+
+@media (max-width: 600px) {
+  .email-display {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  nav {
+    justify-content: center;
+  }
+
+  .font-add-h1 {
+    font-size: 2rem;
+  }
+}
+
+.pulse {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(67, 97, 238, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(67, 97, 238, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(67, 97, 238, 0);
+  }
+}
+
+.center-text {
+  text-align: center;
+}
+
+.status-text {
+  text-align: center;
+  color: var(--success);
+  margin-top: 15px;
+  display: none;
 }
