@@ -1,197 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description"
-        content="Create free temporary email addresses with Temp Mail Pro. Stay anonymous online and avoid spam. Fast, secure, and disposable. Try now!">
-    <title>Temp Mail Pro – Free Temporary & Disposable Email Service</title>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8611225687740241"
-        crossorigin="anonymous"></script>
-    <script defer data-domain="tempmailspro.com" src="https://plausible.io/js/script.js"></script>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Create free temporary email addresses with TempMailsPro. Stay anonymous, avoid spam, and enjoy fast, secure disposable email access. Upgrade for custom domains and longer storage." />
+  <title>Temp Mail Pro – Free Temporary & Disposable Email Service</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8611225687740241" crossorigin="anonymous"></script>
+  <script defer data-domain="tempmailspro.com" src="https://plausible.io/js/script.js"></script>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
 </head>
 <body>
-    <div class="container">
-        <header class="ad-panel">
-            <div class="logo">
-                <i class="fas fa-envelope"></i>
-                <h1>TempMailsPro</h1>
-            </div>
-            <nav>
-                <a href="#" id="new-email-link"><i class="fas fa-sync-alt"></i> New Mail</a>
-                <a href="#"><i class="fas fa-star"></i> Premium</a>
-                <a href="#"><i class="fas fa-question-circle"></i> FAQ</a>
-            </nav>
-        </header>
+  <div class="container">
+    <!-- Header -->
+    <header class="ad-panel">
+      <div class="logo">
+        <i class="fas fa-envelope"></i>
+        <h1>TempMailsPro</h1>
+      </div>
+      <nav>
+        <a href="#" id="new-email-link"><i class="fas fa-sync-alt"></i> New Mail</a>
+        <a href="#"><i class="fas fa-star"></i> Premium</a>
+        <a href="#"><i class="fas fa-question-circle"></i> FAQ</a>
+      </nav>
+    </header>
 
-        <!-- Top Ad Banner -->
-        <div class="">
-            <div class="ad-content-h1">
-                <div class="ah1p">
-                    <h1 class="font-add-h1">Get a Temp Email Instantly</h1>
-                    <h2 class="email-generator-p">Create a disposable email address at tempmailspro.com in seconds. NO
-                        signup required.</h2>
-                </div>
-            </div>
+    <!-- Hero -->
+    <section class="hero">
+      <h1 class="font-add-h1">Get a Temp Email Instantly</h1>
+      <h2 class="email-generator-p">Create a disposable email address at tempmailspro.com in seconds. NO signup required.</h2>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Left Column -->
+      <section class="content-column">
+        <!-- Email Generator -->
+        <div class="email-generator animated">
+          <h2><i class="fas fa-envelope"></i> Your Temporary Email</h2>
+          <div class="email-display">
+            <span id="generated-email">user@tempmailpro.com</span>
+            <button id="copy-btn"><i class="fas fa-copy"></i> Copy</button>
+          </div>
+          <button id="generate-btn"><i class="fas fa-plus"></i> Generate New Address</button>
+          <p id="email-status" class="status-text"><i class="fas fa-circle-notch fa-spin"></i> Listening for incoming emails...</p>
         </div>
 
-        <div class="main-content">
-            <div class="content-column">
-                <div class="email-generator animated">
-                    <h2><i class="fas fa-envelope"></i> Your Temporary Email</h2>
-                    <div class="email-display">
-                        <span id="generated-email">user@tempmailpro.com</span>
-                        <button id="copy-btn"><i class="fas fa-copy"></i> Copy</button>
-                    </div>
-                    <button id="generate-btn"><i class="fas fa-plus"></i> Generate New Address</button>
-                    <p id="email-status"
-                        style="margin-top: 15px; color: var(--success); text-align: center; display: none;">
-                        <i class="fas fa-circle-notch fa-spin"></i> Listening for incoming emails...
-                    </p>
-                </div>
-
-                <!-- Middle Ad Banner -->
-                <div class="ad-panel">
-                    <div class="ad-title">
-                        <h3></h3>
-                    </div>
-                    <div class="ad-content">
-                        <a href="https://your-ad-link.com" target="_blank">
-                            <img src="5717bc9c-2832-47b5-a41a-8e6ae1d49c48.png" alt="Ad Banner"
-                                style="width:100%; border-radius:8px;" />
-                        </a>
-                    </div>
-                </div>
-
-
-                <div class="inbox animated">
-                    <div class="inbox-header">
-                        <h2><i class="fas fa-inbox"></i> Inbox <span id="unread-count" class="pulse"
-                                style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 20px; font-size: 0.8rem;">0</span>
-                        </h2>
-                        <div class="controls">
-                            <button id="refresh-btn"><i class="fas fa-sync"></i></button>
-                            <button id="delete-btn"><i class="fas fa-trash"></i></button>
-                        </div>
-                    </div>
-                    <div class="email-list" id="email-list">
-                        <div class="email-item" style="text-align: center; padding: 30px; color: var(--gray);">
-                            <i class="fas fa-inbox fa-2x"></i>
-                            <div style="margin-top: 15px;">Your inbox is empty</div>
-                            <p style="font-size: 0.9rem; margin-top: 10px;">Emails will appear here when received</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Email View Panel -->
-                <div class="email-view" id="email-view">
-                    <div class="email-view-header">
-                        <h2 id="email-view-subject">Email Subject</h2>
-                        <div class="email-meta">
-                            <div>
-                                From: <span id="email-view-from"
-                                    style="color: var(--primary);">sender@example.com</span>
-                            </div>
-                            <div>
-                                Received: <span id="email-view-time">Just now</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="email-body" id="email-view-body">
-                        Email content will be displayed here...
-                    </div>
-                    <div style="margin-top: 30px; text-align: center;">
-                        <button id="back-to-inbox" class="btn-outline"><i class="fas fa-arrow-left"></i> Back to
-                            Inbox</button>
-                    </div>
-                </div>
-
-                <!-- Stats Section -->
-                <div class="stats-container">
-                    <div class="stat-card animated">
-                        <i class="fas fa-users"></i>
-                        <div class="stat-number" id="active-users">24.5K</div>
-                        <div>Active Users</div>
-                    </div>
-                    <div class="stat-card animated">
-                        <i class="fas fa-envelope-open"></i>
-                        <div class="stat-number" id="emails-processed">1.2M</div>
-                        <div>Emails Processed</div>
-                    </div>
-                    <div class="stat-card animated">
-                        <i class="fas fa-shield-alt"></i>
-                        <div class="stat-number">100%</div>
-                        <div>Secure & Private</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Sidebar with Ad Panels -->
-            <div class="sidebar-column">
-                <!-- Premium Banner -->
-                <div class="premium-banner animated">
-                    <div class="premium-content">
-                        <h3>Go Premium!</h3>
-                        <p>Remove ads, get custom domains, and extended email lifetime</p>
-                        <button class="premium-btn">Upgrade Now</button>
-                    </div>
-                    <i class="fas fa-crown fa-3x"></i>
-                </div>
-                <!-- Vertical Ad 1 -->
-                <div class="ad-panel">
-                    <div class="ad-title">
-                        
-                        
-                    </div>
-                    <div class="ad-content vertical">
-
-                    </div>
-                </div>
-                <!-- Small Ad -->
-                <div class="ad-panel">
-                    <div class="ad-title">
-                        <i class="fas fa-ad"></i>
-                        <span>Sponsored</span>
-                    </div>
-                    <div class="ad-content small">
-                        <p>Ad Space (300x100)</p>
-                        <p class="ad-label">Recommended for you</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Bottom Ad Banner -->
+        <!-- Ad -->
         <div class="ad-panel">
-            <div class="ad-title">
-                <i class="fas fa-ad"></i>
-                <span>Advertisement</span>
-            </div>
-            <div class="ad-content">
-                <p>Ad Space (728x90)</p>
-                <p class="ad-label">High visibility placement</p>
-            </div>
+          <div class="ad-content">
+            <a href="https://your-ad-link.com" target="_blank">
+              <img src="5717bc9c-2832-47b5-a41a-8e6ae1d49c48.png" alt="Free Temporary Email Generator with Temp Mail Pro" style="width:100%; border-radius:8px;" />
+            </a>
+          </div>
         </div>
-        <footer>
-            <div class="footer-links">
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Service</a>
-                <a href="#">Contact Us</a>
-                <a href="#">API Documentation</a>
-                <a href="#">Affiliate Program</a>
+
+        <!-- Inbox -->
+        <div class="inbox animated">
+          <div class="inbox-header">
+            <h2><i class="fas fa-inbox"></i> Inbox <span id="unread-count" class="pulse">0</span></h2>
+            <div class="controls">
+              <button id="refresh-btn"><i class="fas fa-sync"></i></button>
+              <button id="delete-btn"><i class="fas fa-trash"></i></button>
             </div>
-            <p>© 2026 tempmailspro.com - Free Temporary Email Service. All rights reserved.</p>
-            <p class="footer-copy">This service is 100% free and supported by advertisements. By using our service, you
-                agree to our terms.</p>
-        </footer>
-    </div>
-    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-" data-ad-slot="" data-ad-format="auto"
-        data-full-width-responsive="true"></ins>
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-    <script src="script.js"></script>
+          </div>
+          <div class="email-list" id="email-list">
+            <div class="email-item center-text">
+              <i class="fas fa-inbox fa-2x"></i>
+              <div>Your inbox is empty</div>
+              <p>Emails will appear here when received</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Email View -->
+        <div class="email-view" id="email-view">
+          <div class="email-view-header">
+            <h2 id="email-view-subject">Email Subject</h2>
+            <div class="email-meta">
+              <span>From: <span id="email-view-from">sender@example.com</span></span>
+              <span>Received: <span id="email-view-time">Just now</span></span>
+            </div>
+          </div>
+          <div class="email-body" id="email-view-body">Email content will be displayed here...</div>
+          <div class="btn-group">
+            <button id="back-to-inbox" class="btn-outline"><i class="fas fa-arrow-left"></i> Back to Inbox</button>
+          </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-container">
+          <div class="stat-card animated">
+            <i class="fas fa-users"></i>
+            <div class="stat-number" id="active-users">24.5K</div>
+            <div>Active Users</div>
+          </div>
+          <div class="stat-card animated">
+            <i class="fas fa-envelope-open"></i>
+            <div class="stat-number" id="emails-processed">1.2M</div>
+            <div>Emails Processed</div>
+          </div>
+          <div class="stat-card animated">
+            <i class="fas fa-shield-alt"></i>
+            <div class="stat-number">100%</div>
+            <div>Secure & Private</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Sidebar -->
+      <aside class="sidebar-column">
+        <div class="premium-banner animated">
+          <div class="premium-content">
+            <h3>Go Premium!</h3>
+            <p>Anonymous email</p>
+            <button class="premium-btn">Upgrade Now</button>
+          </div>
+          <i class="fas fa-crown fa-3x"></i>
+        </div>
+        <div class="ad-panel"></div>
+        <div class="ad-panel-side-temp ad-content-small">
+          <h3>How to create temp mail</h3>
+          <div class="ad-title">
+            <button class="premium-btn-side-temp">Help</button>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Contact Us</a>
+        <a href="#">API Documentation</a>
+        <a href="#">Affiliate Program</a>
+      </div>
+      <p>© 2026 tempmailspro.com - Free Temporary Email Service. All rights reserved.</p>
+      <p class="footer-copy">This service is 100% free and supported by advertisements. By using our service, you agree to our terms.</p>
+    </footer>
+  </div>
+
+  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8611225687740241" data-ad-slot="" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "TempMailsPro",
+    "url": "https://tempmailspro.com",
+    "description": "Create free temporary email addresses with TempMailsPro. Stay anonymous and avoid spam with fast, disposable email tools."
+  }
+  </script>
+  <script src="script.js"></script>
 </body>
 </html>
