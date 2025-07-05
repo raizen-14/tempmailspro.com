@@ -3,17 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Permissions-Policy" content="interest-cohort=()" />
   <meta name="description"
-    content="Create free temporary email addresses with TempMailsPro. Stay anonymous, avoid spam, and enjoy fast, secure disposable email access. Upgrade for custom domains and longer storage." />
+    content="Create free temporary email addresses with TempMailsPro. Stay anonymous, avoid spam, and enjoy fast, secure disposable email access." />
   <title>Temp Mail Pro – Free Temporary & Disposable Email Service</title>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8611225687740241"
-    crossorigin="anonymous"></script>
-  <script defer data-domain="tempmailspro.com" src="https://plausible.io/js/script.js"></script>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -34,8 +30,7 @@
     <!-- Hero -->
     <section class="hero">
       <h1 class="font-add-h1">Get a Temp Email Instantly</h1>
-      <h2 class="email-generator-p">Create a disposable email address at tempmailspro.com in seconds. NO signup
-        required.</h2>
+      <p class="email-generator-p">Create a disposable email address at tempmailspro.com in seconds. NO signup required.</p>
     </section>
 
     <!-- Main Content -->
@@ -43,21 +38,20 @@
       <!-- Left Column -->
       <section class="content-column">
         <!-- Email Generator -->
-        <div class="email-generator animated">
+        <div class="email-generator">
           <h2><i class="fas fa-envelope"></i> Your Temporary Email</h2>
           <input type="text" id="custom-login" placeholder="Enter your custom name..." style="margin-bottom: 15px; padding: 10px; width: 100%; border-radius: 6px; border: 1px solid #ccc;">
           <div class="email-display">
-            <span id="generated-email"></span>
+            <span id="generated-email">generating@tempmailspro.com</span>
             <button id="copy-btn"><i class="fas fa-copy"></i> Copy</button>
           </div>
           <button id="generate-btn"><i class="fas fa-plus"></i> Generate New Address</button>
-          <p id="email-status" class="status-text"><i class="fas fa-circle-notch fa-spin"></i> Listening for incoming
-            emails...</p>
+          <p id="email-status" class="status-text"><i class="fas fa-circle-notch fa-spin"></i> Listening for incoming emails...</p>
+          <p id="timer" class="status-text"><i class="fas fa-hourglass-start"></i> Expires in: 10:00</p>
         </div>
 
-        <!-- Ad -->
+        <!-- Tutorial -->
         <div class="ad-panel">
-          <!-- Improved Mini Tutorial Card -->
           <div class="mini-tutorial-card">
             <h3>📬 How Temp Mail Works</h3>
             <div class="tutorial-step">
@@ -79,7 +73,7 @@
         </div>
 
         <!-- Inbox -->
-        <div class="inbox animated">
+        <div class="inbox">
           <div class="inbox-header">
             <h2><i class="fas fa-inbox"></i> Inbox <span id="unread-count" class="pulse">0</span></h2>
             <div class="controls">
@@ -136,17 +130,16 @@
         <div class="premium-banner animated">
           <div class="premium-content">
             <h3>Go Premium!</h3>
-            <p>Anonymous email</p>
+            <p>Get longer expiration, custom domains, and no ads</p>
             <button class="premium-btn">Upgrade Now</button>
           </div>
-          <i class="fas fa-crown fa-3x"></i>
+          <i class="fas fa-crown fa-2x"></i>
         </div>
-        <div class="ad-panel"></div>
-        <div class="ad-panel-side-temp ad-content-small">
-          <h3>support our project by donation</h3>
-          <div class="ad-title">
-            <button class="premium-btn-side-temp">support</button>
-          </div>
+        
+        <div class="ad-panel-side-temp">
+          <h3>Support Our Project</h3>
+          <p>Help us keep this service free</p>
+          <button class="premium-btn-side-temp">Donate Now</button>
         </div>
       </aside>
     </main>
@@ -161,25 +154,9 @@
         <a href="#">Affiliate Program</a>
       </div>
       <p>© 2026 tempmailspro.com - Free Temporary Email Service. All rights reserved.</p>
-      <p class="footer-copy">This service is 100% free and supported by advertisements. By using our service, you agree
-        to our terms.</p>
+      <p class="footer-copy">This service is 100% free and supported by advertisements.</p>
     </footer>
   </div>
-
-  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8611225687740241" data-ad-slot=""
-    data-ad-format="auto" data-full-width-responsive="true"></ins>
-  <script>
-    (adsbygoogle = window.adsbygoogle || []).push({});
-  </script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "TempMailsPro",
-    "url": "https://tempmailspro.com",
-    "description": "Create free temporary email addresses with TempMailsPro. Stay anonymous and avoid spam with fast, disposable email tools."
-  }
-  </script>
   <script src="script.js"></script>
 </body>
 </html>
