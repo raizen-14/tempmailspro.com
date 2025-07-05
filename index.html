@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Permissions-Policy" content="interest-cohort=()">
+  <title>TempMailsPro - Free Temporary Email Service</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <div class="logo">
+        <i class="fas fa-envelope"></i>
+        <h1>TempMailsPro</h1>
+      </div>
+      <nav>
+        <a href="#" id="new-email-link"><i class="fas fa-sync-alt"></i> New Mail</a>
+        <a href="#"><i class="fas fa-star"></i> Premium</a>
+        <a href="#"><i class="fas fa-question-circle"></i> FAQ</a>
+      </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <h1>Get a Temp Email Instantly</h1>
+      <p>Create a disposable email address at tempmailspro.com in seconds. NO signup required.</p>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="content-column">
+        <!-- Email Generator -->
+        <div class="card email-generator">
+          <h2><i class="fas fa-envelope"></i> Your Temporary Email</h2>
+          <input type="text" id="custom-login" placeholder="Enter your custom name...">
+          <div class="email-display">
+            <span id="generated-email">generating@tempmailspro.com</span>
+            <button id="copy-btn"><i class="fas fa-copy"></i> Copy</button>
+          </div>
+          <button id="generate-btn"><i class="fas fa-plus"></i> Generate New Address</button>
+          <p id="email-status"><i class="fas fa-circle-notch fa-spin"></i> Listening for incoming emails...</p>
+          <p id="timer"><i class="fas fa-hourglass-start"></i> Expires in: 10:00</p>
+        </div>
+
+        <!-- How It Works -->
+        <div class="card tutorial">
+          <h3><i class="fas fa-info-circle"></i> How Temp Mail Works</h3>
+          <div class="tutorial-steps">
+            <div class="step">
+              <span>1</span>
+              <p>Get a random disposable email</p>
+            </div>
+            <div class="step">
+              <span>2</span>
+              <p>Use it to register or sign up</p>
+            </div>
+            <div class="step">
+              <span>3</span>
+              <p>Instantly receive messages</p>
+            </div>
+            <div class="step">
+              <span>4</span>
+              <p>Messages auto-delete in 10 minutes</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Inbox -->
+        <div class="card inbox">
+          <div class="inbox-header">
+            <h2><i class="fas fa-inbox"></i> Inbox <span id="unread-count">0</span></h2>
+            <div class="controls">
+              <button id="refresh-btn"><i class="fas fa-sync"></i></button>
+              <button id="delete-btn"><i class="fas fa-trash"></i></button>
+            </div>
+          </div>
+          <div class="email-list" id="email-list">
+            <div class="empty-inbox">
+              <i class="fas fa-inbox"></i>
+              <p>Your inbox is empty</p>
+              <p>Emails will appear here when received</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Email View -->
+        <div class="card email-view" id="email-view">
+          <div class="email-header">
+            <h2 id="email-view-subject">Email Subject</h2>
+            <div class="email-meta">
+              <div><strong>From:</strong> <span id="email-view-from">sender@example.com</span></div>
+              <div><strong>Received:</strong> <span id="email-view-time">Just now</span></div>
+            </div>
+          </div>
+          <div class="email-body" id="email-view-body">
+            <p>Email content will be displayed here...</p>
+          </div>
+          <button id="back-to-inbox" class="btn-outline"><i class="fas fa-arrow-left"></i> Back to Inbox</button>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats">
+          <div class="stat-card">
+            <i class="fas fa-users"></i>
+            <h3>Active Users</h3>
+            <p id="active-users">24.5K</p>
+          </div>
+          <div class="stat-card">
+            <i class="fas fa-envelope-open"></i>
+            <h3>Emails Processed</h3>
+            <p id="emails-processed">1.2M</p>
+          </div>
+          <div class="stat-card">
+            <i class="fas fa-shield-alt"></i>
+            <h3>Secure & Private</h3>
+            <p>100%</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="card premium-banner">
+          <div class="premium-content">
+            <h3><i class="fas fa-crown"></i> Go Premium!</h3>
+            <p>Get longer expiration, custom domains, and no ads</p>
+            <button class="premium-btn">Upgrade Now</button>
+          </div>
+        </div>
+        
+        <div class="card support-banner">
+          <h3><i class="fas fa-heart"></i> Support Our Project</h3>
+          <p>Help us keep this service free</p>
+          <button class="support-btn">Donate Now</button>
+        </div>
+      </aside>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Contact Us</a>
+        <a href="#">API Documentation</a>
+        <a href="#">Affiliate Program</a>
+      </div>
+      <p>© 2026 tempmailspro.com - Free Temporary Email Service. All rights reserved.</p>
+      <p class="footer-note">This service is 100% free and supported by advertisements.</p>
+    </footer>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
