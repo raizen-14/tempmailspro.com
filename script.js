@@ -28,7 +28,6 @@ function generateRandomParts() {
   const domain = domains[Math.floor(Math.random() * domains.length)];
   return { login: prefix + randomId, domain };
 }
-
 // Render inbox UI
 function renderInbox() {
   if (emails.length === 0) {
@@ -58,7 +57,6 @@ function renderInbox() {
   });
   updateUnreadCount();
 }
-
 // Poll inbox from API
 function pollInbox() {
   fetch(`https://www.1secmail.com/api/v1/?action=getMessages&login=${currentLogin}&domain=${currentDomain}`)
@@ -168,34 +166,6 @@ window.addEventListener('DOMContentLoaded', () => {
   }, 5000);
 });
 
-
-// export default {
-//   async email(message, env, ctx) {
-//     const email = await message.raw; // full email body
-//     const to = message.to;
-//     const id = crypto.randomUUID();
-//     await env.INBOX.put(`${to}:${id}`, email, { expirationTtl: 600 }); // expires in 10 mins
-//   },
-
-//   async fetch(request, env) {
-//     const url = new URL(request.url);
-//     const email = url.searchParams.get("email");
-//     if (!email) return new Response("Missing email", { status: 400 });
-
-//     const list = await env.INBOX.list({ prefix: email });
-//     const messages = await Promise.all(
-//       list.keys.map(async (key) => {
-//         const body = await env.INBOX.get(key.name);
-//         return { id: key.name, body };
-//       })
-//     );
-
-//     return new Response(JSON.stringify(messages), {
-//       headers: { "content-type": "application/json" },
-//     });
-//   },
-// };
-
 window.addEventListener('DOMContentLoaded', () => {
   generateBtn.addEventListener('click', () => {
     const customLogin = document.getElementById('custom-login').value.trim();
@@ -253,7 +223,7 @@ window.addEventListener('DOMContentLoaded', () => {
 function pollInbox() {
   emailStatus.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> Checking for new emails...`;
 
-  fetch(`https://www.1secmail.com/api/v1/?action=getMessages&login=${currentLogin}&domain=${currentDomain}`)
+  fetch(`https://www.1secmail.com/api/v1/?action=getMessages&login=tempxyz&domain=1secmail.com`)
     .then(res => res.json())
     .then(list => {
       list.forEach(msg => {
@@ -281,3 +251,4 @@ function pollInbox() {
       emailStatus.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Error fetching emails`;
     });
 }
+generateBtn.click(); // Already there in DOMContentLoaded ✅
