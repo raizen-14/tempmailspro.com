@@ -12,7 +12,6 @@ const backToInboxBtn = document.getElementById('back-to-inbox');
 const newEmailLink = document.getElementById('new-email-link');
 const activeUsers = document.getElementById('active-users');
 const emailsProcessed = document.getElementById('emails-processed');
-const customLoginInput = document.getElementById('custom-login');
 const timerElement = document.getElementById('timer');
 
 // Globals
@@ -21,17 +20,18 @@ let currentDomain = '';
 let emails = [];
 let intervalId = null;
 let timerInterval = null;
-let timeLeft = 600; // 10 minutes in seconds
+let timeLeft = 3600; // 60 minutes in seconds
 let totalEmailsProcessed = 1200000;
+let sessionId = '';
 
-// Generate random parts
-function generateRandomParts() {
+// Generate random email
+function generateRandomEmail() {
   const prefixes = ['anon', 'temp', 'secret', 'private', 'ghost', 'stealth', 'secure', 'masked'];
-  const domains = ['1secmail.com', '1secmail.org', '1secmail.net'];
+  const domains = ['tempmailpro.com', 'disposable.me', 'mailinator.net'];
   const prefix = prefixes[Math.floor(Math.random() * prefixes.length)];
   const randomId = Math.random().toString(36).substring(2, 8);
   const domain = domains[Math.floor(Math.random() * domains.length)];
-  return { login: prefix + randomId, domain };
+  return `${prefix}${randomId}@${domain}`;
 }
 
 // Render inbox UI
@@ -56,7 +56,9 @@ function renderInbox() {
     item.innerHTML = `
       <div class="email-info">
         <div class="email-sender">${email.from}</div>
-        <div class="email-subject">${email.subject}</div>
+        <div class="email-subject">${email.subject}
+          ${email.hasOTP ? '<span class="otp-badge">OTP</span>' : ''}
+        </div>
       </div>
       <div class="email-time">${new Date(email.date).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})}</div>
     `;
@@ -66,77 +68,82 @@ function renderInbox() {
   updateUnreadCount();
 }
 
-// Poll inbox from API
-function pollInbox() {
-  if (!currentLogin || !currentDomain) return;
+// Check for OTP in email content
+function hasOTP(content) {
+  // Look for 6-digit codes
+  const otpRegex = /(\b\d{6}\b)|(code:?\s*\d{6})|(verification\s*code:?\s*\d{6})/i;
+  return otpRegex.test(content);
+}
+
+// Extract OTP from email content
+function extractOTP(content) {
+  const otpRegex = /\b\d{6}\b/;
+  const match = content.match(otpRegex);
+  return match ? match[0] : null;
+}
+
+// Simulate email retrieval from API
+function fetchEmails() {
+  if (!currentLogin) return;
   
   emailStatus.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> Checking for new emails...`;
   
-  // Use a CORS proxy to avoid CORS issues
-  const proxyUrl = 'https://api.allorigins.win/raw?url=';
-  const inboxUrl = `https://www.1secmail.com/api/v1/?action=getMessages&login=${currentLogin}&domain=${currentDomain}`;
-  
-  fetch(proxyUrl + encodeURIComponent(inboxUrl))
-    .then(res => res.json())
-    .then(list => {
-      if (list && list.length > 0) {
-        let newEmails = 0;
+  // Simulate API call delay
+  setTimeout(() => {
+    if (Math.random() > 0.5) {
+      const newEmailsCount = Math.floor(Math.random() * 3) + 1;
+      const newEmails = [];
+      
+      for (let i = 0; i < newEmailsCount; i++) {
+        const newEmailId = Date.now() + i;
+        const senders = ['noreply@google.com', 'security@facebook.com', 'support@amazon.com', 'info@twitter.com'];
+        const subjects = ['Verify your email', 'Password reset request', 'Your security code', 'Welcome to our service'];
+        const contentOptions = [
+          `<p>Hello,</p><p>Your verification code is: <strong>${Math.floor(100000 + Math.random() * 900000)}</strong></p><p>This code will expire in 10 minutes.</p>`,
+          `<p>Dear user,</p><p>We received a request to reset your password. Your temporary password is: <strong>${Math.floor(100000 + Math.random() * 900000)}</strong></p>`,
+          `<p>Hello,</p><p>Thank you for signing up for our service. To complete your registration, please click the button below:</p><p><a href="#" style="display: inline-block; background-color: #4361ee; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; margin: 15px 0;">Verify Email Address</a></p>`
+        ];
         
-        list.forEach(msg => {
-          if (!emails.find(e => e.id === msg.id)) {
-            newEmails++;
-            // New message
-            const readUrl = `https://www.1secmail.com/api/v1/?action=readMessage&login=${currentLogin}&domain=${currentDomain}&id=${msg.id}`;
-            fetch(proxyUrl + encodeURIComponent(readUrl))
-              .then(r => r.json())
-              .then(full => {
-                emails.unshift({
-                  id: full.id,
-                  from: full.from,
-                  subject: full.subject || '(No Subject)',
-                  date: full.date,
-                  body: full.textBody || full.htmlBody || 'No content',
-                  read: false
-                });
-                
-                // Update stats
-                totalEmailsProcessed++;
-                emailsProcessed.textContent = totalEmailsProcessed > 1000000 
-                  ? (totalEmailsProcessed / 1000000).toFixed(1) + 'M'
-                  : totalEmailsProcessed.toLocaleString();
-                
-                renderInbox();
-              })
-              .catch(err => {
-                console.error('Error reading message:', err);
-              });
-          }
+        const emailContent = contentOptions[Math.floor(Math.random() * contentOptions.length)];
+        const hasOTP = hasOTP(emailContent);
+        
+        newEmails.push({
+          id: newEmailId,
+          from: senders[Math.floor(Math.random() * senders.length)],
+          subject: subjects[Math.floor(Math.random() * subjects.length)],
+          date: new Date(),
+          body: `<div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">${emailContent}</div>`,
+          read: false,
+          hasOTP: hasOTP
         });
-        
-        if (newEmails > 0) {
-          emailStatus.innerHTML = `<i class="fas fa-check-circle"></i> ${newEmails} new email${newEmails > 1 ? 's' : ''} received!`;
-          setTimeout(() => {
-            emailStatus.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> Listening for incoming emails...`;
-          }, 3000);
-        } else {
-          emailStatus.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> Listening for incoming emails...`;
-        }
-      } else {
-        emailStatus.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> Listening for incoming emails...`;
       }
-    })
-    .catch(err => {
-      console.error('Error fetching emails:', err);
-      emailStatus.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Error fetching emails. Retrying...`;
-    });
+      
+      emails = [...newEmails, ...emails];
+      
+      // Update stats
+      totalEmailsProcessed += newEmailsCount;
+      emailsProcessed.textContent = totalEmailsProcessed > 1000000 
+        ? (totalEmailsProcessed / 1000000).toFixed(1) + 'M'
+        : totalEmailsProcessed.toLocaleString();
+      
+      renderInbox();
+      
+      emailStatus.innerHTML = `<i class="fas fa-check-circle"></i> ${newEmailsCount} new email${newEmailsCount > 1 ? 's' : ''} received!`;
+      setTimeout(() => {
+        emailStatus.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> Listening for incoming emails...`;
+      }, 3000);
+    } else {
+      emailStatus.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> Listening for incoming emails...`;
+    }
+  }, 1000);
 }
 
 // Start polling
 function startEmailListener() {
   clearInterval(intervalId);
   emailStatus.style.display = 'block';
-  intervalId = setInterval(pollInbox, 5000);
-  pollInbox();
+  intervalId = setInterval(fetchEmails, 5000);
+  fetchEmails();
 }
 
 // View email details
@@ -149,20 +156,24 @@ function viewEmail(id) {
   document.getElementById('email-view-from').textContent = email.from;
   document.getElementById('email-view-time').textContent = new Date(email.date).toLocaleString();
   
-  // Display email body safely
+  // Display email body
   const emailBody = document.getElementById('email-view-body');
-  emailBody.innerHTML = '';
+  emailBody.innerHTML = email.body;
   
-  const iframe = document.createElement('iframe');
-  iframe.srcdoc = email.body;
-  iframe.style.width = '100%';
-  iframe.style.height = '400px';
-  iframe.style.border = 'none';
-  iframe.style.borderRadius = '8px';
-  iframe.style.background = 'white';
-  iframe.style.color = 'black';
-  
-  emailBody.appendChild(iframe);
+  // Highlight OTP if present
+  if (email.hasOTP) {
+    const otp = extractOTP(email.body);
+    if (otp) {
+      const otpElement = document.createElement('div');
+      otpElement.style = "margin-top: 20px; padding: 15px; background: #06d6a020; border-radius: 8px; border-left: 4px solid #06d6a0;";
+      otpElement.innerHTML = `
+        <h3 style="margin-bottom: 10px; color: #06d6a0;"><i class="fas fa-key"></i> OTP Detected</h3>
+        <p style="font-size: 1.5rem; font-weight: bold; letter-spacing: 2px;">${otp}</p>
+        <p style="margin-top: 10px; font-size: 0.9rem;">This code was automatically detected in the email</p>
+      `;
+      emailBody.appendChild(otpElement);
+    }
+  }
   
   document.querySelector('.inbox').style.display = 'none';
   emailView.style.display = 'block';
@@ -178,11 +189,11 @@ function updateUnreadCount() {
 // Timer functions
 function startTimer() {
   clearInterval(timerInterval);
-  clearInterval(intervalId); // Clear previous email checks
+  clearInterval(intervalId);
   
-  timeLeft = 600;
+  timeLeft = 3600;
   timerElement.style.display = 'block';
-  timerElement.innerHTML = `<i class="fas fa-hourglass-start"></i> Expires in: 10:00`;
+  timerElement.innerHTML = `<i class="fas fa-hourglass-start"></i> Expires in: 60:00`;
   
   timerInterval = setInterval(() => {
     const minutes = Math.floor(timeLeft / 60).toString().padStart(2, '0');
@@ -215,12 +226,10 @@ window.addEventListener('DOMContentLoaded', () => {
   });
   
   generateBtn.addEventListener('click', () => {
-    const customLogin = customLoginInput.value.trim();
-    const parts = generateRandomParts();
-    
-    currentLogin = customLogin || parts.login;
-    currentDomain = parts.domain;
-    generatedEmail.textContent = `${currentLogin}@${currentDomain}`;
+    const newEmail = generateRandomEmail();
+    generatedEmail.textContent = newEmail;
+    currentLogin = newEmail.split('@')[0];
+    currentDomain = newEmail.split('@')[1];
     
     emails = [];
     renderInbox();
@@ -234,7 +243,7 @@ window.addEventListener('DOMContentLoaded', () => {
   });
   
   refreshBtn.addEventListener('click', () => {
-    pollInbox();
+    fetchEmails();
     refreshBtn.innerHTML = '<i class="fas fa-sync fa-spin"></i>';
     setTimeout(() => { refreshBtn.innerHTML = '<i class="fas fa-sync"></i>'; }, 1000);
   });
@@ -273,5 +282,7 @@ window.addEventListener('DOMContentLoaded', () => {
   }, 5000);
   
   // Generate initial email
-  generateBtn.click();
+  setTimeout(() => {
+    generateBtn.click();
+  }, 1000);
 });
