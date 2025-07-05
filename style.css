@@ -79,7 +79,12 @@ nav a {
     align-items: center;
     gap: 5px;
     font-size: 0.8rem;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: "Inconsolata", monospace;
+    font-optical-sizing: auto;
+    font-weight: weight;
+    font-style: normal;
+    font-variation-settings:
+        "wdth" 100;
 }
 
 nav a:hover {
@@ -125,7 +130,7 @@ nav a:hover {
     align-items: center;
     justify-content: space-between;
     gap: 20px;
-    padding-top: 2pc;
+    
 }
 }
 
@@ -674,7 +679,7 @@ header {
     font-weight: weight;
     font-style: normal;
     font-variation-settings:
-    "wdth"100;
+        "wdth" 100;
 }
 
 nav {
@@ -883,3 +888,41 @@ footer {
     margin-top: 15px;
     display: none;
 }
+.mini-tutorial-card {
+  background: #ffffff;
+  border-left: 5px solid #007bff;
+  padding: 16px 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  margin-top: 12px;
+  transition: transform 0.2s ease;
+}
+
+.mini-tutorial-card:hover {
+  transform: translateY(-2px);
+}
+
+.mini-tutorial-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 14px;
+  color: #111;
+  font-weight: 600;
+}
+
+.tutorial-step {
+  display: flex;
+  align-items: center;
+  font-size: 0.95rem;
+  margin: 6px 0;
+  color: #333;
+  font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
+}
+
+.tutorial-step span {
+  display: inline-block;
+  font-size: 1.1rem;
+  margin-right: 8px;
+  width: 24px;
+  text-align: center;
+}
+
