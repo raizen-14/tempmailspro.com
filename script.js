@@ -167,20 +167,117 @@ window.addEventListener('DOMContentLoaded', () => {
     activeUsers.textContent = Math.max(1000, users + change).toLocaleString();
   }, 5000);
 });
-// document.addEventListener('click', function(event) {
-//     const target = event.target;
-//     const tag = target.tagName;
-//     const text = target.innerText || target.value || target.alt;
-//     const href = target.href || '';
 
-//     console.log('Clicked element:', { tag, text, href });
 
-//     // Example: Send to your backend
-//     fetch('/log-click', {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify({ tag, text, href, time: new Date() })
+// export default {
+//   async email(message, env, ctx) {
+//     const email = await message.raw; // full email body
+//     const to = message.to;
+//     const id = crypto.randomUUID();
+//     await env.INBOX.put(`${to}:${id}`, email, { expirationTtl: 600 }); // expires in 10 mins
+//   },
+
+//   async fetch(request, env) {
+//     const url = new URL(request.url);
+//     const email = url.searchParams.get("email");
+//     if (!email) return new Response("Missing email", { status: 400 });
+
+//     const list = await env.INBOX.list({ prefix: email });
+//     const messages = await Promise.all(
+//       list.keys.map(async (key) => {
+//         const body = await env.INBOX.get(key.name);
+//         return { id: key.name, body };
+//       })
+//     );
+
+//     return new Response(JSON.stringify(messages), {
+//       headers: { "content-type": "application/json" },
 //     });
-// });
+//   },
+// };
+
+window.addEventListener('DOMContentLoaded', () => {
+  generateBtn.addEventListener('click', () => {
+    const customLogin = document.getElementById('custom-login').value.trim();
+    const parts = generateRandomParts();
+    currentLogin = customLogin || parts.login;
+    currentDomain = parts.domain;
+
+    generatedEmail.textContent = `${currentLogin}@${currentDomain}`;
+    emails = [];
+    renderInbox();
+    startEmailListener();
+    generateBtn.innerHTML = '<i class="fas fa-check"></i> Generated!';
+    setTimeout(() => {
+      generateBtn.innerHTML = '<i class="fas fa-plus"></i> Generate New Address';
+    }, 1500);
+  });
+
+  // Also move all other event listeners here:
+  refreshBtn.addEventListener('click', pollInbox);
+  deleteBtn.addEventListener('click', () => {
+    emails = [];
+    renderInbox();
+    deleteBtn.innerHTML = '<i class="fas fa-check"></i> Cleared!';
+    setTimeout(() => {
+      deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
+    }, 1500);
+  });
+  copyBtn.addEventListener('click', () => {
+    navigator.clipboard.writeText(generatedEmail.textContent).then(() => {
+      copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+      setTimeout(() => {
+        copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy';
+      }, 2000);
+    });
+  });
+  backToInboxBtn.addEventListener('click', () => {
+    emailView.style.display = 'none';
+    document.querySelector('.inbox').style.display = 'block';
+  });
+  newEmailLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    generateBtn.click();
+  });
+
+  // Initialize
+  generateBtn.click();
+
+  setInterval(() => {
+    const users = parseFloat(activeUsers.textContent.replace(/,/g, ''));
+    const change = Math.floor(Math.random() * 21) - 10;
+    activeUsers.textContent = Math.max(1000, users + change).toLocaleString();
+  }, 5000);
+});
+
+function pollInbox() {
+  emailStatus.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> Checking for new emails...`;
+
+  fetch(`https://www.1secmail.com/api/v1/?action=getMessages&login=${currentLogin}&domain=${currentDomain}`)
+    .then(res => res.json())
+    .then(list => {
+      list.forEach(msg => {
+        if (!emails.find(e => e.id === msg.id)) {
+          fetch(`https://www.1secmail.com/api/v1/?action=readMessage&login=${currentLogin}&domain=${currentDomain}&id=${msg.id}`)
+            .then(r => r.json())
+            .then(full => {
+              emails.unshift({
+                id: full.id,
+                from: full.from,
+                subject: full.subject,
+                date: full.date,
+                body: full.body,
+                read: false
+              });
+              emailsProcessed.textContent = (parseFloat(emailsProcessed.textContent.replace(/,/g, '')) + 1).toLocaleString();
+              renderInbox();
+            });
+        }
+      });
+      emailStatus.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> Listening for incoming emails...`;
+    })
+    .catch(err => {
+      console.error(err);
+      emailStatus.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Error fetching emails`;
+    });
+}
