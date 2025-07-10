@@ -37,6 +37,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+
+    <!-- ad script -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-861225687740241"crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="container">
@@ -337,29 +340,29 @@
         New email received!
     </div>
     <script>
-  (function() {
-    const toggleBtn = document.getElementById('theme-toggle');
-    const root = document.documentElement; // <html>
-    const storageKey = 'theme';            // localStorage key
+        (function () {
+            const toggleBtn = document.getElementById('theme-toggle');
+            const root = document.documentElement; // <html>
+            const storageKey = 'theme';            // localStorage key
 
-    // on load: read saved theme
-    const saved = localStorage.getItem(storageKey);
-    if (saved === 'light') {
-      root.classList.add('light-theme');
-      toggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
-    }
+            // on load: read saved theme
+            const saved = localStorage.getItem(storageKey);
+            if (saved === 'light') {
+                root.classList.add('light-theme');
+                toggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+            }
 
-    toggleBtn.addEventListener('click', () => {
-      const isLight = root.classList.toggle('light-theme');
-      // swap the icon
-      toggleBtn.innerHTML = isLight
-        ? '<i class="fas fa-sun"></i>'
-        : '<i class="fas fa-moon"></i>';
-      // persist preference
-      localStorage.setItem(storageKey, isLight ? 'light' : 'dark');
-    });
-  })();
-</script>
+            toggleBtn.addEventListener('click', () => {
+                const isLight = root.classList.toggle('light-theme');
+                // swap the icon
+                toggleBtn.innerHTML = isLight
+                    ? '<i class="fas fa-sun"></i>'
+                    : '<i class="fas fa-moon"></i>';
+                // persist preference
+                localStorage.setItem(storageKey, isLight ? 'light' : 'dark');
+            });
+        })();
+    </script>
 
     <script src="script.js"></script>
 </body>
