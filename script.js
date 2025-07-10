@@ -16,22 +16,18 @@ const timerElement = document.getElementById('timer');
 
 // Globals
 let currentLogin = '';
-let currentDomain = '';
 let emails = [];
 let intervalId = null;
 let timerInterval = null;
-let timeLeft = 3600; // 60 minutes in seconds
+let timeLeft = 600; // 10 minutes in seconds
 let totalEmailsProcessed = 1200000;
-let sessionId = '';
 
 // Generate random email
 function generateRandomEmail() {
-  const prefixes = ['anon', 'temp', 'secret', 'private', 'ghost', 'stealth', 'secure', 'masked'];
-  const domains = ['tempmailpro.com', 'disposable.me', 'mailinator.net'];
-  const prefix = prefixes[Math.floor(Math.random() * prefixes.length)];
-  const randomId = Math.random().toString(36).substring(2, 8);
+  const domains = ['1secmail.com', '1secmail.net', '1secmail.org'];
+  const prefix = Math.random().toString(36).substring(2, 10);
   const domain = domains[Math.floor(Math.random() * domains.length)];
-  return `${prefix}${randomId}@${domain}`;
+  return `${prefix}@${domain}`;
 }
 
 // Render inbox UI
@@ -70,64 +66,58 @@ function renderInbox() {
 
 // Check for OTP in email content
 function hasOTP(content) {
-  // Look for 6-digit codes
-  const otpRegex = /(\b\d{6}\b)|(code:?\s*\d{6})|(verification\s*code:?\s*\d{6})/i;
+  const otpRegex = /(\b\d{4,8}\b)|(code:?\s*\d{4,8})|(verification\s*code:?\s*\d{4,8})|(otp:?\s*\d{4,8})/i;
   return otpRegex.test(content);
 }
 
 // Extract OTP from email content
 function extractOTP(content) {
-  const otpRegex = /\b\d{6}\b/;
+  const otpRegex = /\b\d{4,8}\b/;
   const match = content.match(otpRegex);
   return match ? match[0] : null;
 }
 
-// Simulate email retrieval from API
-function fetchEmails() {
+// Retrieve emails from API
+async function fetchEmails() {
   if (!currentLogin) return;
   
   emailStatus.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> Checking for new emails...`;
   
-  // Simulate API call delay
-  setTimeout(() => {
-    if (Math.random() > 0.5) {
-      const newEmailsCount = Math.floor(Math.random() * 3) + 1;
-      const newEmails = [];
+  try {
+    const [login, domain] = currentLogin.split('@');
+    const response = await fetch(`https://www.1secmail.com/api/v1/?action=getMessages&login=${login}&domain=${domain}`);
+    const messages = await response.json();
+    
+    if (!messages || messages.length === 0) {
+      emailStatus.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> Listening for incoming emails...`;
+      return;
+    }
+
+    let newEmailsCount = 0;
+    
+    for (const message of messages) {
+      if (emails.some(e => e.id === message.id)) continue;
       
-      for (let i = 0; i < newEmailsCount; i++) {
-        const newEmailId = Date.now() + i;
-        const senders = ['noreply@google.com', 'security@facebook.com', 'support@amazon.com', 'info@twitter.com'];
-        const subjects = ['Verify your email', 'Password reset request', 'Your security code', 'Welcome to our service'];
-        const contentOptions = [
-          `<p>Hello,</p><p>Your verification code is: <strong>${Math.floor(100000 + Math.random() * 900000)}</strong></p><p>This code will expire in 10 minutes.</p>`,
-          `<p>Dear user,</p><p>We received a request to reset your password. Your temporary password is: <strong>${Math.floor(100000 + Math.random() * 900000)}</strong></p>`,
-          `<p>Hello,</p><p>Thank you for signing up for our service. To complete your registration, please click the button below:</p><p><a href="#" style="display: inline-block; background-color: #4361ee; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; margin: 15px 0;">Verify Email Address</a></p>`
-        ];
-        
-        const emailContent = contentOptions[Math.floor(Math.random() * contentOptions.length)];
-        const hasOTP = hasOTP(emailContent);
-        
-        newEmails.push({
-          id: newEmailId,
-          from: senders[Math.floor(Math.random() * senders.length)],
-          subject: subjects[Math.floor(Math.random() * subjects.length)],
-          date: new Date(),
-          body: `<div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">${emailContent}</div>`,
-          read: false,
-          hasOTP: hasOTP
-        });
-      }
+      const emailRes = await fetch(`https://www.1secmail.com/api/v1/?action=readMessage&login=${login}&domain=${domain}&id=${message.id}`);
+      const emailData = await emailRes.json();
       
-      emails = [...newEmails, ...emails];
+      const newEmail = {
+        id: message.id,
+        from: emailData.from,
+        subject: emailData.subject || "No Subject",
+        date: new Date(emailData.date),
+        body: emailData.htmlBody || emailData.textBody || "No content",
+        read: false,
+        hasOTP: hasOTP(emailData.textBody || "")
+      };
       
-      // Update stats
-      totalEmailsProcessed += newEmailsCount;
-      emailsProcessed.textContent = totalEmailsProcessed > 1000000 
-        ? (totalEmailsProcessed / 1000000).toFixed(1) + 'M'
-        : totalEmailsProcessed.toLocaleString();
-      
+      emails.unshift(newEmail);
+      newEmailsCount++;
+      totalEmailsProcessed++;
+    }
+
+    if (newEmailsCount > 0) {
       renderInbox();
-      
       emailStatus.innerHTML = `<i class="fas fa-check-circle"></i> ${newEmailsCount} new email${newEmailsCount > 1 ? 's' : ''} received!`;
       setTimeout(() => {
         emailStatus.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> Listening for incoming emails...`;
@@ -135,10 +125,13 @@ function fetchEmails() {
     } else {
       emailStatus.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> Listening for incoming emails...`;
     }
-  }, 1000);
+  } catch (error) {
+    console.error('Error fetching emails:', error);
+    emailStatus.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Error fetching emails`;
+  }
 }
 
-// Start polling
+// Start email polling
 function startEmailListener() {
   clearInterval(intervalId);
   emailStatus.style.display = 'block';
@@ -186,14 +179,14 @@ function updateUnreadCount() {
   unreadCount.textContent = unread;
 }
 
-// Timer functions
+// Timer functions (10-minute expiration)
 function startTimer() {
   clearInterval(timerInterval);
   clearInterval(intervalId);
   
-  timeLeft = 3600;
+  timeLeft = 600; // 10 minutes
   timerElement.style.display = 'block';
-  timerElement.innerHTML = `<i class="fas fa-hourglass-start"></i> Expires in: 60:00`;
+  timerElement.innerHTML = `<i class="fas fa-hourglass-start"></i> Expires in: 10:00`;
   
   timerInterval = setInterval(() => {
     const minutes = Math.floor(timeLeft / 60).toString().padStart(2, '0');
@@ -228,8 +221,7 @@ window.addEventListener('DOMContentLoaded', () => {
   generateBtn.addEventListener('click', () => {
     const newEmail = generateRandomEmail();
     generatedEmail.textContent = newEmail;
-    currentLogin = newEmail.split('@')[0];
-    currentDomain = newEmail.split('@')[1];
+    currentLogin = newEmail;
     
     emails = [];
     renderInbox();
