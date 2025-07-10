@@ -39,148 +39,218 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <!-- Header -->
-    <header>
-      <div class="logo">
-        <i class="fas fa-envelope"></i>
-        <h1>TempMail Pro</h1>
-      </div>
-      <nav>
-        <a href="#" id="new-email-link"><i class="fas fa-sync-alt"></i> New Mail</a>
-        <a href="#"><i class="fas fa-star"></i> Premium</a>
-        <a href="#"><i class="fas fa-question-circle"></i> FAQ</a>
-      </nav>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="hero">
-      <h1>Get a Real Temp Email Instantly</h1>
-      <p>Create a disposable email address at tempmailpro.com in seconds. NO signup required.</p>
-    </section>
-
-    <!-- Main Content -->
-    <main class="main-content">
-      <div class="content-column">
-        <!-- Email Generator -->
-        <div class="card email-generator">
-          <h2><i class="fas fa-envelope"></i> Your Temporary Email</h2>
-          <div class="email-display">
-            <span id="generated-email">Click generate to create an email</span>
-            <button id="copy-btn"><i class="fas fa-copy"></i> Copy</button>
-          </div>
-          <button id="generate-btn"><i class="fas fa-plus"></i> Generate New Address</button>
-          <p id="email-status"><i class="fas fa-circle-notch fa-spin"></i> Listening for incoming emails...</p>
-          <p id="timer"><i class="fas fa-hourglass-start"></i> Expires in: 10:00</p>
-        </div>
-
-        <!-- How It Works -->
-        <div class="card tutorial">
-          <h3><i class="fas fa-info-circle"></i> How Temp Mail Works</h3>
-          <div class="tutorial-steps">
-            <div class="step">
-              <span>1</span>
-              <p>Get a random disposable email</p>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="logo">
+                <i class="fas fa-envelope"></i>
+                <h1>TempMailsPro</h1>
             </div>
-            <div class="step">
-              <span>2</span>
-              <p>Use it to register or sign up</p>
-            </div>
-            <div class="step">
-              <span>3</span>
-              <p>Instantly receive messages</p>
-            </div>
-            <div class="step">
-              <span>4</span>
-              <p>Messages auto-delete in 10 minutes</p>
-            </div>
-          </div>
-        </div>
+            <nav>
+                <a href="#"><i class="fas fa-home"></i> Home</a>
+                <a href="#features"><i class="fas fa-star"></i> Features</a>
+                <a href="#premium"><i class="fas fa-crown"></i> Premium</a>
+                <a href="#"><i class="fas fa-question-circle"></i> FAQ</a>
+            </nav>
+        </header>
 
-        <!-- Inbox -->
-        <div class="card inbox">
-          <div class="inbox-header">
-            <h2><i class="fas fa-inbox"></i> Inbox <span id="unread-count">0</span></h2>
-            <div class="controls">
-              <button id="refresh-btn"><i class="fas fa-sync"></i></button>
-              <button id="delete-btn"><i class="fas fa-trash"></i></button>
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>Get a Real Temp Email Instantly</h1>
+            <p>Create a disposable email address at tempmailspro.com in seconds. NO signup required.</p>
+            <a href="#generator" class="hero-btn pulse">
+                <i class="fas fa-envelope"></i> Get Your Temp Email Now
+            </a>
+        </section>
+
+        <!-- Main Content -->
+        <main>
+            <!-- Email Generator -->
+            <div class="card email-generator" id="generator">
+                <h2><i class="fas fa-envelope"></i> Your Temporary Email</h2>
+                <div class="email-display">
+                    <span id="generated-email">ghostedyu2c@issemail.org</span>
+                    <button id="copy-btn"><i class="fas fa-copy"></i> Copy</button>
+                </div>
+                <button id="generate-btn"><i class="fas fa-plus"></i> Generate New Address</button>
+                <p id="email-status"><i class="fas fa-circle-notch fa-spin"></i> Listening for incoming emails...</p>
+                <p id="timer"><i class="fas fa-hourglass-start"></i> Expires in: 04:58</p>
             </div>
-          </div>
-          <div class="email-list" id="email-list">
-            <div class="empty-inbox">
-              <i class="fas fa-inbox"></i>
-              <p>Your inbox is empty</p>
-              <p>Emails will appear here when received</p>
+
+            <!-- Ad 1: VPN Service -->
+            <div class="ad-container">
+                <span class="ad-label">AD</span>
+                <h3 class="ad-title">Protect Your Online Privacy</h3>
+                <p class="ad-description">Get military-grade encryption and anonymous browsing with our trusted VPN partner</p>
+                <a href="#" class="ad-btn">Get 70% Off Now</a>
+                <div class="ad-offer">
+                    <p><i class="fas fa-gift"></i> Special offer: 3 months free for TempMailsPro users</p>
+                </div>
             </div>
-          </div>
-        </div>
 
-        <!-- Email View -->
-        <div class="card email-view" id="email-view">
-          <div class="email-header">
-            <h2 id="email-view-subject">Email Subject</h2>
-            <div class="email-meta">
-              <div><strong>From:</strong> <span id="email-view-from">sender@example.com</span></div>
-              <div><strong>Received:</strong> <span id="email-view-time">Just now</span></div>
+            <!-- How It Works -->
+            <div class="card tutorial">
+                <h3><i class="fas fa-info-circle"></i> How Temp Mail Works</h3>
+                <div class="tutorial-steps">
+                    <div class="step">
+                        <span>1</span>
+                        <p>Get a random disposable email</p>
+                    </div>
+                    <div class="step">
+                        <span>2</span>
+                        <p>Use it to register or sign up</p>
+                    </div>
+                    <div class="step">
+                        <span>3</span>
+                        <p>Instantly receive messages</p>
+                    </div>
+                    <div class="step">
+                        <span>4</span>
+                        <p>Messages auto-delete in 10 minutes</p>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="email-body" id="email-view-body">
-            <p>Email content will be displayed here...</p>
-          </div>
-          <button id="back-to-inbox" class="btn-outline"><i class="fas fa-arrow-left"></i> Back to Inbox</button>
-        </div>
 
-        <!-- Stats -->
-        <div class="stats">
-          <div class="stat-card">
-            <i class="fas fa-users"></i>
-            <h3>Active Users</h3>
-            <p id="active-users">24.5K</p>
-          </div>
-          <div class="stat-card">
-            <i class="fas fa-envelope-open"></i>
-            <h3>Emails Processed</h3>
-            <p id="emails-processed">1.2M</p>
-          </div>
-          <div class="stat-card">
-            <i class="fas fa-shield-alt"></i>
-            <h3>Secure & Private</h3>
-            <p>100%</p>
-          </div>
-        </div>
-      </div>
+            <!-- Features Section -->
+            <section id="features">
+                <h2 style="text-align: center; margin: 40px 0 30px; color: var(--light);">
+                    <i class="fas fa-star"></i> Why Choose TempMailsPro
+                </h2>
+                <div class="features">
+                    <div class="card feature-card">
+                        <i class="fas fa-shield-alt"></i>
+                        <h3>Complete Privacy</h3>
+                        <p>Your personal information remains hidden. No logs, no tracking.</p>
+                    </div>
+                    <div class="card feature-card">
+                        <i class="fas fa-bolt"></i>
+                        <h3>Instant Setup</h3>
+                        <p>Get your temporary email in seconds with no registration required.</p>
+                    </div>
+                    <div class="card feature-card">
+                        <i class="fas fa-inbox"></i>
+                        <h3>Real Inbox</h3>
+                        <p>Receive real emails instantly in your temporary inbox.</p>
+                    </div>
+                </div>
+            </section>
 
-      <!-- Sidebar -->
-      <aside class="sidebar">
-        <div class="card premium-banner">
-          <div class="premium-content">
-            <h3><i class="fas fa-crown"></i> Go Premium!</h3>
-            <p>Get longer expiration, custom domains, and no ads</p>
-            <button class="premium-btn">Upgrade Now</button>
-          </div>
-        </div>
+            <!-- Ad 2: Password Manager -->
+            <div class="ad-container">
+                <span class="ad-label">AD</span>
+                <h3 class="ad-title">Never Forget a Password Again</h3>
+                <p class="ad-description">Store unlimited passwords securely and access them anywhere</p>
+                <a href="#" class="ad-btn">Try Free for 30 Days</a>
+                <div class="ad-offer">
+                    <p><i class="fas fa-lock"></i> Military-grade encryption for all your credentials</p>
+                </div>
+            </div>
 
-        <div class="card support-banner">
-          <h3><i class="fas fa-heart"></i> Support Our Project</h3>
-          <p>Help us keep this service free</p>
-          <button class="support-btn">Donate Now</button>
-        </div>
-      </aside>
-    </main>
+            <!-- Premium Section -->
+            <section class="premium-section" id="premium">
+                <h2><i class="fas fa-crown"></i> Go Premium!</h2>
+                <p>Upgrade to unlock advanced features and support our service</p>
+                
+                <div class="premium-features">
+                    <div class="premium-feature">
+                        <i class="fas fa-clock"></i>
+                        <h4>Extended Expiry</h4>
+                        <p>Emails last for 24 hours</p>
+                    </div>
+                    <div class="premium-feature">
+                        <i class="fas fa-tag"></i>
+                        <h4>Custom Domains</h4>
+                        <p>Choose from premium domains</p>
+                    </div>
+                    <div class="premium-feature">
+                        <i class="fas fa-ad"></i>
+                        <h4>Ad-Free Experience</h4>
+                        <p>Browse without distractions</p>
+                    </div>
+                    <div class="premium-feature">
+                        <i class="fas fa-cloud-download-alt"></i>
+                        <h4>Email Forwarding</h4>
+                        <p>Forward to your main inbox</p>
+                    </div>
+                </div>
+                
+                <a href="#" class="hero-btn">
+                    <i class="fas fa-rocket"></i> Upgrade Now - Only $2.99/month
+                </a>
+            </section>
 
-    <!-- Footer -->
-    <footer>
-      <div class="footer-links">
-        <a href="#">Privacy Policy</a>
-        <a href="#">Terms of Service</a>
-        <a href="#">Contact Us</a>
-        <a href="#">API Documentation</a>
-        <a href="#">Affiliate Program</a>
-      </div>
-      <p>© 2025 tempmailpro.com - Free Temporary Email Service. All rights reserved.</p>
-      <p class="footer-note">This service is 100% free and supported by advertisements.</p>
-    </footer>
-  </div>
-  <script src="script.js"></script>
+            <!-- Testimonials -->
+            <section class="testimonials">
+                <h2 style="text-align: center; margin: 50px 0 30px; color: var(--light);">
+                    <i class="fas fa-comments"></i> What Our Users Say
+                </h2>
+                <div class="testimonial-grid">
+                    <div class="card testimonial">
+                        <p>"TempMailsPro saved me from spam when signing up for multiple services. The OTP detection feature is brilliant!"</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">MJ</div>
+                            <div class="author-info">
+                                <h4>Mark Johnson</h4>
+                                <p>Freelance Developer</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card testimonial">
+                        <p>"As a privacy advocate, I appreciate how TempMailsPro keeps my primary inbox clean and secure."</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">SP</div>
+                            <div class="author-info">
+                                <h4>Sarah Peterson</h4>
+                                <p>Security Analyst</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card testimonial">
+                        <p>"The premium version is worth every penny. Custom domains and extended expiry have been game-changers."</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">DR</div>
+                            <div class="author-info">
+                                <h4>David Reynolds</h4>
+                                <p>Startup Founder</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Ad 3: Antivirus Software -->
+            <div class="ad-container">
+                <span class="ad-label">AD</span>
+                <h3 class="ad-title">Complete Device Protection</h3>
+                <p class="ad-description">Secure all your devices with our award-winning antivirus software</p>
+                <a href="#" class="ad-btn">Get Protected Today</a>
+                <div class="ad-offer">
+                    <p><i class="fas fa-shield-virus"></i> Special discount for TempMailsPro users</p>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Contact Us</a>
+                <a href="#">API Documentation</a>
+                <a href="#">Affiliate Program</a>
+            </div>
+            
+            <div class="social-links">
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-github"></i></a>
+            </div>
+            
+            <p class="footer-note">© 2025 TempMailsPro - Free Temporary Email Service. All rights reserved. This service is 100% free and supported by advertisements.</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
