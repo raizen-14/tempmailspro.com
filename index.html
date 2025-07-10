@@ -1,42 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Primary Meta Tags -->
-  <title>TempMail Pro - Free Temporary Email Service</title>
-  <meta name="title" content="TempMail Pro - Free Temporary Email Service">
-  <meta name="description"
-    content="TempMail Pro lets you generate a temporary, disposable email address instantly. Stay anonymous, avoid spam, and protect your privacy — no signup required.">
-  <meta name="keywords"
-    content="temp mail, disposable email, temporary email, free email, anonymous email, tempmail pro, spam free email">
-  <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://tempmailspro.com">
+    <!-- Primary Meta Tags -->
+    <title>TempMail Pro - Free Temporary Email Service</title>
+    <meta name="title" content="TempMail Pro - Free Temporary Email Service">
+    <meta name="description"
+        content="TempMail Pro lets you generate a temporary, disposable email address instantly. Stay anonymous, avoid spam, and protect your privacy — no signup required.">
+    <meta name="keywords"
+        content="temp mail, disposable email, temporary email, free email, anonymous email, tempmail pro, spam free email">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://tempmailspro.com">
 
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://tempmailspro.com">
-  <meta property="og:title" content="TempMail Pro - Free Temporary Email Service">
-  <meta property="og:description"
-    content="Generate temporary email addresses and receive messages instantly. No signup, no spam.">
-  <meta property="og:image" content="https://tempmailspro.com/preview.png">
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tempmailspro.com">
+    <meta property="og:title" content="TempMail Pro - Free Temporary Email Service">
+    <meta property="og:description"
+        content="Generate temporary email addresses and receive messages instantly. No signup, no spam.">
+    <meta property="og:image" content="https://tempmailspro.com/preview.png">
 
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:url" content="https://tempmailspro.com">
-  <meta name="twitter:title" content="TempMail Pro - Free Temporary Email Service">
-  <meta name="twitter:description" content="Create free, disposable emails in seconds and avoid spam.">
-  <meta name="twitter:image" content="https://tempmailspro.com/preview.png">
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://tempmailspro.com">
+    <meta name="twitter:title" content="TempMail Pro - Free Temporary Email Service">
+    <meta name="twitter:description" content="Create free, disposable emails in seconds and avoid spam.">
+    <meta name="twitter:image" content="https://tempmailspro.com/preview.png">
 
-  <!-- Favicon -->
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 
-  <!-- Fonts & Styles -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+    <!-- Fonts & Styles -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
@@ -51,6 +51,9 @@
                 <a href="#features"><i class="fas fa-star"></i> Features</a>
                 <a href="#premium"><i class="fas fa-crown"></i> Premium</a>
                 <a href="#"><i class="fas fa-question-circle"></i> FAQ</a>
+                <div class="theme-toggle" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </div>
             </nav>
         </header>
 
@@ -77,15 +80,89 @@
                 <p id="timer"><i class="fas fa-hourglass-start"></i> Expires in: 04:58</p>
             </div>
 
+            <!-- Inbox Section -->
+            <div class="card">
+                <h2><i class="fas fa-inbox"></i> Inbox <span id="unread-count" class="unread-badge">3</span></h2>
+                <div class="tabs">
+                    <div class="tab active" data-tab="primary">Primary</div>
+                    <div class="tab" data-tab="promotions">Promotions</div>
+                    <div class="tab" data-tab="social">Social</div>
+                </div>
+
+                <div class="inbox-container">
+                    <div class="inbox-header">
+                        <div class="inbox-controls">
+                            <button id="refresh-btn"><i class="fas fa-sync-alt"></i> Refresh</button>
+                            <button id="delete-btn"><i class="fas fa-trash-alt"></i> Delete</button>
+                        </div>
+                        <div class="inbox-search">
+                            <input type="text" id="search-input" placeholder="Search emails...">
+                        </div>
+                    </div>
+
+                    <div class="tab-content active" id="primary-content">
+                        <div class="email-list" id="email-list">
+                            <!-- Emails will be populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="promotions-content">
+                        <div class="no-emails">
+                            <i class="fas fa-tag fa-2x"></i>
+                            <p>No promotional emails yet</p>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="social-content">
+                        <div class="no-emails">
+                            <i class="fas fa-users fa-2x"></i>
+                            <p>No social emails yet</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Email Detail View -->
+            <div class="card" id="email-detail" style="display: none;">
+                <div class="email-detail-header">
+                    <button id="back-to-inbox"><i class="fas fa-arrow-left"></i> Back to Inbox</button>
+                    <h3 id="detail-subject">Welcome to TempMailsPro</h3>
+                </div>
+                <div class="email-meta">
+                    <div><strong>From:</strong> <span id="detail-sender">support@tempmailspro.com</span></div>
+                    <div><strong>Date:</strong> <span id="detail-date">July 10, 2025 10:30 AM</span></div>
+                </div>
+                <div class="email-body" id="detail-body">
+                    <p>Hello there,</p>
+                    <p>Thank you for choosing TempMailsPro! We're excited to have you as a user.</p>
+                    <p>With our service, you can:</p>
+                    <ul>
+                        <li>Generate temporary email addresses instantly</li>
+                        <li>Receive emails without signing up</li>
+                        <li>Keep your personal inbox free from spam</li>
+                        <li>Access emails for 10 minutes before they expire</li>
+                    </ul>
+                    <p>If you have any questions, feel free to reach out to our support team.</p>
+                    <p>Best regards,<br>The TempMailsPro Team</p>
+                </div>
+                <div class="email-actions">
+                    <button><i class="fas fa-reply"></i> Reply</button>
+                    <button><i class="fas fa-share"></i> Forward</button>
+                    <button><i class="fas fa-trash-alt"></i> Delete</button>
+                </div>
+            </div>
+
             <!-- Ad 1: VPN Service -->
             <div class="ad-container">
-                <span class="ad-label">AD</span>
-                <h3 class="ad-title">Protect Your Online Privacy</h3>
-                <p class="ad-description">Get military-grade encryption and anonymous browsing with our trusted VPN partner</p>
-                <a href="#" class="ad-btn">Get 70% Off Now</a>
-                <div class="ad-offer">
-                    <p><i class="fas fa-gift"></i> Special offer: 3 months free for TempMailsPro users</p>
-                </div>
+                <script async
+                    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8611225687740241"
+                    crossorigin="anonymous"></script>
+                <!-- ad23 -->
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8611225687740241"
+                    data-ad-slot="8920729436" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
             </div>
 
             <!-- How It Works -->
@@ -113,9 +190,7 @@
 
             <!-- Features Section -->
             <section id="features">
-                <h2 style="text-align: center; margin: 40px 0 30px; color: var(--light);">
-                    <i class="fas fa-star"></i> Why Choose TempMailsPro
-                </h2>
+                <h2><i class="fas fa-star"></i> Why Choose TempMailsPro</h2>
                 <div class="features">
                     <div class="card feature-card">
                         <i class="fas fa-shield-alt"></i>
@@ -137,20 +212,22 @@
 
             <!-- Ad 2: Password Manager -->
             <div class="ad-container">
-                <span class="ad-label">AD</span>
-                <h3 class="ad-title">Never Forget a Password Again</h3>
-                <p class="ad-description">Store unlimited passwords securely and access them anywhere</p>
-                <a href="#" class="ad-btn">Try Free for 30 Days</a>
-                <div class="ad-offer">
-                    <p><i class="fas fa-lock"></i> Military-grade encryption for all your credentials</p>
-                </div>
+                <script async
+                    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8611225687740241"
+                    crossorigin="anonymous"></script>
+                <!-- ad34 -->
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8611225687740241"
+                    data-ad-slot="1282746715" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
             </div>
 
             <!-- Premium Section -->
             <section class="premium-section" id="premium">
                 <h2><i class="fas fa-crown"></i> Go Premium!</h2>
                 <p>Upgrade to unlock advanced features and support our service</p>
-                
+
                 <div class="premium-features">
                     <div class="premium-feature">
                         <i class="fas fa-clock"></i>
@@ -173,7 +250,7 @@
                         <p>Forward to your main inbox</p>
                     </div>
                 </div>
-                
+
                 <a href="#" class="hero-btn">
                     <i class="fas fa-rocket"></i> Upgrade Now - Only $2.99/month
                 </a>
@@ -181,12 +258,11 @@
 
             <!-- Testimonials -->
             <section class="testimonials">
-                <h2 style="text-align: center; margin: 50px 0 30px; color: var(--light);">
-                    <i class="fas fa-comments"></i> What Our Users Say
-                </h2>
+                <h2><i class="fas fa-comments"></i> What Our Users Say</h2>
                 <div class="testimonial-grid">
                     <div class="card testimonial">
-                        <p>"TempMailsPro saved me from spam when signing up for multiple services. The OTP detection feature is brilliant!"</p>
+                        <p>"TempMailsPro saved me from spam when signing up for multiple services. The OTP detection
+                            feature is brilliant!"</p>
                         <div class="testimonial-author">
                             <div class="author-avatar">MJ</div>
                             <div class="author-info">
@@ -196,7 +272,8 @@
                         </div>
                     </div>
                     <div class="card testimonial">
-                        <p>"As a privacy advocate, I appreciate how TempMailsPro keeps my primary inbox clean and secure."</p>
+                        <p>"As a privacy advocate, I appreciate how TempMailsPro keeps my primary inbox clean and
+                            secure."</p>
                         <div class="testimonial-author">
                             <div class="author-avatar">SP</div>
                             <div class="author-info">
@@ -206,7 +283,8 @@
                         </div>
                     </div>
                     <div class="card testimonial">
-                        <p>"The premium version is worth every penny. Custom domains and extended expiry have been game-changers."</p>
+                        <p>"The premium version is worth every penny. Custom domains and extended expiry have been
+                            game-changers."</p>
                         <div class="testimonial-author">
                             <div class="author-avatar">DR</div>
                             <div class="author-info">
@@ -220,13 +298,15 @@
 
             <!-- Ad 3: Antivirus Software -->
             <div class="ad-container">
-                <span class="ad-label">AD</span>
-                <h3 class="ad-title">Complete Device Protection</h3>
-                <p class="ad-description">Secure all your devices with our award-winning antivirus software</p>
-                <a href="#" class="ad-btn">Get Protected Today</a>
-                <div class="ad-offer">
-                    <p><i class="fas fa-shield-virus"></i> Special discount for TempMailsPro users</p>
-                </div>
+                <script async
+                    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8611225687740241"
+                    crossorigin="anonymous"></script>
+                <!-- ad44 -->
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8611225687740241"
+                    data-ad-slot="7357200472" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
             </div>
         </main>
 
@@ -239,15 +319,22 @@
                 <a href="#">API Documentation</a>
                 <a href="#">Affiliate Program</a>
             </div>
-            
+
             <div class="social-links">
                 <a href="#"><i class="fab fa-twitter"></i></a>
                 <a href="#"><i class="fab fa-facebook-f"></i></a>
                 <a href="#"><i class="fab fa-instagram"></i></a>
                 <a href="#"><i class="fab fa-github"></i></a>
             </div>
-            <p class="footer-note">© 2025 TempMailsPro - Free Temporary Email Service. All rights reserved. This service is 100% free and supported by advertisements.</p>
+
+            <p class="footer-note">© 2025 TempMailsPro - Free Temporary Email Service. All rights reserved. This service
+                is 100% free and supported by advertisements.</p>
         </footer>
+    </div>
+
+    <!-- Notification Element -->
+    <div class="notification" id="notification">
+        New email received!
     </div>
     <script src="script.js"></script>
 </body>
