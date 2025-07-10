@@ -336,6 +336,31 @@
     <div class="notification" id="notification">
         New email received!
     </div>
+    <script>
+  (function() {
+    const toggleBtn = document.getElementById('theme-toggle');
+    const root = document.documentElement; // <html>
+    const storageKey = 'theme';            // localStorage key
+
+    // on load: read saved theme
+    const saved = localStorage.getItem(storageKey);
+    if (saved === 'light') {
+      root.classList.add('light-theme');
+      toggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+    }
+
+    toggleBtn.addEventListener('click', () => {
+      const isLight = root.classList.toggle('light-theme');
+      // swap the icon
+      toggleBtn.innerHTML = isLight
+        ? '<i class="fas fa-sun"></i>'
+        : '<i class="fas fa-moon"></i>';
+      // persist preference
+      localStorage.setItem(storageKey, isLight ? 'light' : 'dark');
+    });
+  })();
+</script>
+
     <script src="script.js"></script>
 </body>
 </html>
