@@ -4,45 +4,44 @@ let currentToken = null;
 let expirationTimer = null;
 
 // DOM elements
-const generatedEmail = document.getElementById('generated-email');
-const generateBtn = document.getElementById('generate-btn');
-const refreshBtn = document.getElementById('refresh-btn');
-const emailList = document.getElementById('email-list');
-const unreadCount = document.getElementById('unread-count');
-const emailDetail = document.getElementById('email-detail');
-const backToInbox = document.getElementById('back-to-inbox');
-const deleteBtn = document.getElementById('delete-btn');
-const timerElement = document.getElementById('timer');
-const notification = document.getElementById('notification');
+const generatedEmail = document.getElementById("generated-email");
+const generateBtn = document.getElementById("generate-btn");
+const refreshBtn = document.getElementById("refresh-btn");
+const emailList = document.getElementById("email-list");
+const unreadCount = document.getElementById("unread-count");
+const emailDetail = document.getElementById("email-detail");
+const backToInbox = document.getElementById("back-to-inbox");
+const deleteBtn = document.getElementById("delete-btn");
+const timerElement = document.getElementById("timer");
+const notification = document.getElementById("notification");
 
 let emails = [];
 let selectedEmails = [];
 let timeLeft = 600; // 10 minutes
-
 // 📨 Create account + fetch token
 async function createTempAccount() {
   const username = `user${Math.random().toString(36).substring(2, 10)}`;
-  const domainRes = await fetch('https://api.mail.tm/domains');
+  const domainRes = await fetch("https://api.mail.tm/domains");
   const domains = await domainRes.json();
-  const domain = domains['hydra:member'][0].domain;
+  const domain = domains["hydra:member"][0].domain;
   const email = `${username}@${domain}`;
   const password = `${Math.random().toString(36).substring(2, 10)}*Temp`;
 
-  const accountRes = await fetch('https://api.mail.tm/accounts', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ address: email, password })
+  const accountRes = await fetch("https://api.mail.tm/accounts", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ address: email, password }),
   });
 
   if (!accountRes.ok) {
-    showNotification('⚠️ Failed to create temp account');
+    showNotification("⚠️ Failed to create temp account");
     return;
   }
 
-  const tokenRes = await fetch('https://api.mail.tm/token', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ address: email, password })
+  const tokenRes = await fetch("https://api.mail.tm/token", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ address: email, password }),
   });
   const tokenData = await tokenRes.json();
 
@@ -59,8 +58,8 @@ async function createTempAccount() {
 function startTimer() {
   clearInterval(expirationTimer);
   expirationTimer = setInterval(() => {
-    const min = String(Math.floor(timeLeft / 60)).padStart(2, '0');
-    const sec = String(timeLeft % 60).padStart(2, '0');
+    const min = String(Math.floor(timeLeft / 60)).padStart(2, "0");
+    const sec = String(timeLeft % 60).padStart(2, "0");
     timerElement.innerHTML = `<i class="fas fa-hourglass-start"></i> Expires in: ${min}:${sec}`;
     timeLeft--;
     if (timeLeft < 0) {
@@ -68,7 +67,7 @@ function startTimer() {
       emails = [];
       renderEmailList();
       timerElement.innerHTML = `<i class="fas fa-clock"></i> Mailbox expired.`;
-      showNotification('⏳ Temporary mailbox expired');
+      showNotification("⏳ Temporary mailbox expired");
     }
   }, 1000);
 }
@@ -76,18 +75,18 @@ function startTimer() {
 // 📬 Fetch inbox messages
 async function fetchInbox() {
   if (!currentToken) return;
-  const res = await fetch('https://api.mail.tm/messages', {
-    headers: { Authorization: `Bearer ${currentToken}` }
+  const res = await fetch("https://api.mail.tm/messages", {
+    headers: { Authorization: `Bearer ${currentToken}` },
   });
   const data = await res.json();
-  emails = data['hydra:member'].map(msg => ({
+  emails = data["hydra:member"].map((msg) => ({
     id: msg.id,
-    sender: msg.from?.address || 'Unknown',
-    subject: msg.subject || '(No Subject)',
+    sender: msg.from?.address || "Unknown",
+    subject: msg.subject || "(No Subject)",
     preview: msg.intro,
     time: new Date(msg.createdAt).toLocaleTimeString(),
     unread: !msg.seen,
-    content: null
+    content: null,
   }));
   renderEmailList();
 }
@@ -96,27 +95,28 @@ async function fetchInbox() {
 async function showEmailDetail(email) {
   if (!email.content) {
     const res = await fetch(`https://api.mail.tm/messages/${email.id}`, {
-      headers: { Authorization: `Bearer ${currentToken}` }
+      headers: { Authorization: `Bearer ${currentToken}` },
     });
     const data = await res.json();
-    email.content = data.text || data.html || '(No content)';
+    email.content = data.text || data.html || "(No content)";
   }
-  document.querySelector('.inbox-container').style.display = 'none';
-  emailDetail.style.display = 'block';
-  document.getElementById('detail-sender').textContent = email.sender;
-  document.getElementById('detail-subject').textContent = email.subject;
-  document.getElementById('detail-date').textContent = new Date().toLocaleString();
-  document.getElementById('detail-body').textContent = email.content;
+  document.querySelector(".inbox-container").style.display = "none";
+  emailDetail.style.display = "block";
+  document.getElementById("detail-sender").textContent = email.sender;
+  document.getElementById("detail-subject").textContent = email.subject;
+  document.getElementById("detail-date").textContent =
+    new Date().toLocaleString();
+  document.getElementById("detail-body").textContent = email.content;
 }
 
 // 🧹 Render email list
 function renderEmailList() {
-  emailList.innerHTML = '';
+  emailList.innerHTML = "";
   let unread = 0;
-  emails.forEach(email => {
+  emails.forEach((email) => {
     if (email.unread) unread++;
-    const item = document.createElement('div');
-    item.className = `email-item ${email.unread ? 'unread' : ''}`;
+    const item = document.createElement("div");
+    item.className = `email-item ${email.unread ? "unread" : ""}`;
     item.dataset.id = email.id;
     item.innerHTML = `
       <div class="email-checkbox">
@@ -134,23 +134,23 @@ function renderEmailList() {
   unreadCount.textContent = unread;
 
   // Click listeners
-  document.querySelectorAll('.email-item').forEach(item => {
-    item.addEventListener('click', e => {
-      if (!e.target.classList.contains('email-checkbox-input')) {
+  document.querySelectorAll(".email-item").forEach((item) => {
+    item.addEventListener("click", (e) => {
+      if (!e.target.classList.contains("email-checkbox-input")) {
         const id = item.dataset.id;
-        const email = emails.find(e => e.id === id);
+        const email = emails.find((e) => e.id === id);
         if (email.unread) email.unread = false;
         showEmailDetail(email);
         renderEmailList();
       }
     });
   });
-  document.querySelectorAll('.email-checkbox-input').forEach(checkbox => {
-    checkbox.addEventListener('click', e => {
+  document.querySelectorAll(".email-checkbox-input").forEach((checkbox) => {
+    checkbox.addEventListener("click", (e) => {
       e.stopPropagation();
       const id = checkbox.dataset.id;
       if (checkbox.checked) selectedEmails.push(id);
-      else selectedEmails = selectedEmails.filter(i => i !== id);
+      else selectedEmails = selectedEmails.filter((i) => i !== id);
     });
   });
 }
@@ -160,24 +160,24 @@ async function deleteSelectedEmails() {
   if (!selectedEmails.length || !currentToken) return;
   for (let id of selectedEmails) {
     await fetch(`https://api.mail.tm/messages/${id}`, {
-      method: 'DELETE',
-      headers: { Authorization: `Bearer ${currentToken}` }
+      method: "DELETE",
+      headers: { Authorization: `Bearer ${currentToken}` },
     });
   }
   selectedEmails = [];
   fetchInbox();
-  showNotification('🗑️ Selected emails deleted');
+  showNotification("🗑️ Selected emails deleted");
 }
 
 // 📢 Show message
 function showNotification(message) {
   notification.textContent = message;
-  notification.classList.add('show');
-  setTimeout(() => notification.classList.remove('show'), 3000);
+  notification.classList.add("show");
+  setTimeout(() => notification.classList.remove("show"), 3000);
 }
 
 // 🧠 Events
-generateBtn.addEventListener('click', () => {
+generateBtn.addEventListener("click", () => {
   createTempAccount();
   generateBtn.innerHTML = '<i class="fas fa-check"></i> Generated!';
   setTimeout(() => {
@@ -185,16 +185,205 @@ generateBtn.addEventListener('click', () => {
   }, 1500);
 });
 
-refreshBtn.addEventListener('click', () => {
+refreshBtn.addEventListener("click", () => {
   refreshBtn.innerHTML = '<i class="fas fa-sync-alt fa-spin"></i> Refreshing';
   fetchInbox().then(() => {
     refreshBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Refresh';
-    showNotification('🔁 Inbox refreshed');
+    showNotification("🔁 Inbox refreshed");
   });
 });
 
-deleteBtn.addEventListener('click', deleteSelectedEmails);
-backToInbox.addEventListener('click', () => {
-  emailDetail.style.display = 'none';
-  document.querySelector('.inbox-container').style.display = 'block';
+deleteBtn.addEventListener("click", deleteSelectedEmails);
+backToInbox.addEventListener("click", () => {
+  emailDetail.style.display = "none";
+  document.querySelector(".inbox-container").style.display = "block";
+});
+// Copy-to-clipboard
+const copyBtn = document.getElementById("copy-btn");
+copyBtn.addEventListener("click", async () => {
+  const emailText = generatedEmail.textContent.trim();
+  try {
+    await navigator.clipboard.writeText(emailText);
+    showNotification("📋 Copied to clipboard!");
+    copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied';
+    setTimeout(() => {
+      copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy';
+    }, 1500);
+  } catch (err) {
+    showNotification("⚠️ Failed to copy");
+    console.error("Copy failed:", err);
+  }
+});
+// Collapsible FAQ
+document.querySelectorAll("#faq .faq-item h4").forEach((question) => {
+  question.addEventListener("click", () => {
+    question.parentElement.classList.toggle("open");
+  });
+});
+const modal = document.getElementById("termsModal");
+const btn = document.getElementById("openTerms");
+const span = document.getElementById("closeTerms");
+
+btn.onclick = function () {
+  modal.style.display = "block";
+};
+
+span.onclick = function () {
+  modal.style.display = "none";
+};
+
+window.onclick = function (event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+};
+
+
+
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const modal = document.getElementById("termsModal");
+  const btn = document.getElementById("openTerms");
+  const closeBtn = document.getElementById("closeTerms");
+
+  if (modal && btn && closeBtn) {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      modal.style.display = "block";
+      document.body.style.overflow = "hidden"; // lock scroll
+    });
+
+    closeBtn.addEventListener("click", () => {
+      modal.style.display = "none";
+      document.body.style.overflow = "";
+    });
+
+    window.addEventListener("click", (event) => {
+      if (event.target === modal) {
+        modal.style.display = "none";
+        document.body.style.overflow = "";
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        modal.style.display = "none";
+        document.body.style.overflow = "";
+      }
+    });
+  }
+});
+
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const contactModal = document.getElementById("contactModal");
+  const openContactBtn = document.getElementById("openContact");
+  const closeContactBtn = document.getElementById("closeContact");
+
+  if (contactModal && openContactBtn && closeContactBtn) {
+    openContactBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      contactModal.style.display = "block";
+      document.body.style.overflow = "hidden";
+    });
+
+    closeContactBtn.addEventListener("click", () => {
+      contactModal.style.display = "none";
+      document.body.style.overflow = "";
+    });
+
+    window.addEventListener("click", (e) => {
+      if (e.target === contactModal) {
+        contactModal.style.display = "none";
+        document.body.style.overflow = "";
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        contactModal.style.display = "none";
+        document.body.style.overflow = "";
+      }
+    });
+  }
+});
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const apiModal = document.getElementById("apiModal");
+  const openApiBtn = document.getElementById("openApi");
+  const closeApiBtn = document.getElementById("closeApi");
+
+  if (apiModal && openApiBtn && closeApiBtn) {
+    openApiBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      apiModal.style.display = "block";
+      document.body.style.overflow = "hidden";
+    });
+
+    closeApiBtn.addEventListener("click", () => {
+      apiModal.style.display = "none";
+      document.body.style.overflow = "";
+    });
+
+    window.addEventListener("click", (e) => {
+      if (e.target === apiModal) {
+        apiModal.style.display = "none";
+        document.body.style.overflow = "";
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        apiModal.style.display = "none";
+        document.body.style.overflow = "";
+      }
+    });
+  }
+});
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const privacyModal = document.getElementById("privacyModal");
+  const openPrivacyBtn = document.getElementById("openPrivacy");
+  const closePrivacyBtn = document.getElementById("closePrivacy");
+
+  if (privacyModal && openPrivacyBtn && closePrivacyBtn) {
+    openPrivacyBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      privacyModal.style.display = "block";
+      document.body.style.overflow = "hidden";
+    });
+
+    closePrivacyBtn.addEventListener("click", () => {
+      privacyModal.style.display = "none";
+      document.body.style.overflow = "";
+    });
+
+    window.addEventListener("click", (e) => {
+      if (e.target === privacyModal) {
+        privacyModal.style.display = "none";
+        document.body.style.overflow = "";
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        privacyModal.style.display = "none";
+        document.body.style.overflow = "";
+      }
+    });
+  }
 });
