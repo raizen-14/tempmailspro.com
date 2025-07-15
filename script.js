@@ -238,152 +238,43 @@ window.onclick = function (event) {
   }
 };
 
+  document.addEventListener('DOMContentLoaded', () => {
+      // Email generation
+      const generateBtn = document.getElementById('generate-btn');
+      const copyBtn     = document.getElementById('copy-btn');
+      const emailText   = document.getElementById('email-text');
 
-
-
-
-
-
-
-document.addEventListener("DOMContentLoaded", () => {
-  const modal = document.getElementById("termsModal");
-  const btn = document.getElementById("openTerms");
-  const closeBtn = document.getElementById("closeTerms");
-
-  if (modal && btn && closeBtn) {
-    btn.addEventListener("click", (e) => {
-      e.preventDefault();
-      modal.style.display = "block";
-      document.body.style.overflow = "hidden"; // lock scroll
-    });
-
-    closeBtn.addEventListener("click", () => {
-      modal.style.display = "none";
-      document.body.style.overflow = "";
-    });
-
-    window.addEventListener("click", (event) => {
-      if (event.target === modal) {
-        modal.style.display = "none";
-        document.body.style.overflow = "";
+      function randomString(len) {
+        const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+        return Array.from({ length: len }, () => chars.charAt(Math.random() * chars.length | 0)).join('');
       }
-    });
+      generateBtn.onclick = () => emailText.textContent = randomString(10) + '@tempmailspro.com';
+      copyBtn.onclick = () => {
+        const em = emailText.textContent;
+        if (!em.includes('@')) return alert('Generate an email first!');
+        navigator.clipboard.writeText(em).then(
+          () => alert('Copied!'),
+          () => alert('Copy failed.')
+        );
+      };
 
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") {
-        modal.style.display = "none";
-        document.body.style.overflow = "";
+      // Modal handler factory
+      function setupModal(openId, modalId, closeId) {
+        const btn       = document.getElementById(openId);
+        const modal     = document.getElementById(modalId);
+        const closeBtn  = document.getElementById(closeId);
+        if (!btn || !modal || !closeBtn) return;
+        btn.onclick = e => { e.preventDefault(); modal.style.display = 'block'; document.body.style.overflow = 'hidden'; };
+        closeBtn.onclick = () => { modal.style.display = 'none'; document.body.style.overflow = ''; };
+        window.addEventListener('click', e => {
+          if (e.target === modal) { modal.style.display = 'none'; document.body.style.overflow = ''; }
+        });
+        document.addEventListener('keydown', e => {
+          if (e.key === 'Escape') { modal.style.display = 'none'; document.body.style.overflow = ''; }
+        });
       }
+
+      ['Terms', 'Privacy', 'Api', 'Contact'].forEach(name =>
+        setupModal('open' + name, name.toLowerCase() + 'Modal', 'close' + name)
+      );
     });
-  }
-});
-
-
-
-
-
-
-document.addEventListener("DOMContentLoaded", () => {
-  const contactModal = document.getElementById("contactModal");
-  const openContactBtn = document.getElementById("openContact");
-  const closeContactBtn = document.getElementById("closeContact");
-
-  if (contactModal && openContactBtn && closeContactBtn) {
-    openContactBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      contactModal.style.display = "block";
-      document.body.style.overflow = "hidden";
-    });
-
-    closeContactBtn.addEventListener("click", () => {
-      contactModal.style.display = "none";
-      document.body.style.overflow = "";
-    });
-
-    window.addEventListener("click", (e) => {
-      if (e.target === contactModal) {
-        contactModal.style.display = "none";
-        document.body.style.overflow = "";
-      }
-    });
-
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") {
-        contactModal.style.display = "none";
-        document.body.style.overflow = "";
-      }
-    });
-  }
-});
-
-
-
-
-
-document.addEventListener("DOMContentLoaded", () => {
-  const apiModal = document.getElementById("apiModal");
-  const openApiBtn = document.getElementById("openApi");
-  const closeApiBtn = document.getElementById("closeApi");
-
-  if (apiModal && openApiBtn && closeApiBtn) {
-    openApiBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      apiModal.style.display = "block";
-      document.body.style.overflow = "hidden";
-    });
-
-    closeApiBtn.addEventListener("click", () => {
-      apiModal.style.display = "none";
-      document.body.style.overflow = "";
-    });
-
-    window.addEventListener("click", (e) => {
-      if (e.target === apiModal) {
-        apiModal.style.display = "none";
-        document.body.style.overflow = "";
-      }
-    });
-
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") {
-        apiModal.style.display = "none";
-        document.body.style.overflow = "";
-      }
-    });
-  }
-});
-
-
-
-document.addEventListener("DOMContentLoaded", () => {
-  const privacyModal = document.getElementById("privacyModal");
-  const openPrivacyBtn = document.getElementById("openPrivacy");
-  const closePrivacyBtn = document.getElementById("closePrivacy");
-
-  if (privacyModal && openPrivacyBtn && closePrivacyBtn) {
-    openPrivacyBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      privacyModal.style.display = "block";
-      document.body.style.overflow = "hidden";
-    });
-
-    closePrivacyBtn.addEventListener("click", () => {
-      privacyModal.style.display = "none";
-      document.body.style.overflow = "";
-    });
-
-    window.addEventListener("click", (e) => {
-      if (e.target === privacyModal) {
-        privacyModal.style.display = "none";
-        document.body.style.overflow = "";
-      }
-    });
-
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") {
-        privacyModal.style.display = "none";
-        document.body.style.overflow = "";
-      }
-    });
-  }
-});
