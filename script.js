@@ -17,10 +17,16 @@ const notification = document.getElementById("notification");
 
 let emails = [];
 let selectedEmails = [];
-let timeLeft = 600; // 10 minutes
+let timeLeft = 600; // fallback
+const TIMER_KEY = "tempmail_timer";
+const EMAIL_KEY = "tempmail_email";
+const LIMIT_KEY = "tempmail_limit";
+const LIMIT_WINDOW = 30 * 60 * 1000; // 30 minutes
+const MAX_EMAILS = 3;
+
 // 📨 Create account + fetch token
 async function createTempAccount() {
-  const username = `user${Math.random().toString(36).substring(2, 10)}`;
+  const username = Array.from(crypto.getRandomValues(new Uint8Array(6))).map((b) => b.toString(36).padStart(2, "0")).join("");
   const domainRes = await fetch("https://api.mail.tm/domains");
   const domains = await domainRes.json();
   const domain = domains["hydra:member"][0].domain;
@@ -47,6 +53,8 @@ async function createTempAccount() {
 
   currentAccount = email;
   currentToken = tokenData.token;
+  localStorage.setItem(TIMER_KEY, Date.now());
+  localStorage.setItem(EMAIL_KEY, email);
 
   generatedEmail.textContent = email;
   timeLeft = 600;
@@ -57,17 +65,32 @@ async function createTempAccount() {
 // ⏱️ Start expiration countdown
 function startTimer() {
   clearInterval(expirationTimer);
+
+  const storedTime = localStorage.getItem(TIMER_KEY);
+  const startTime = storedTime ? parseInt(storedTime, 10) : Date.now();
+  const elapsed = Math.floor((Date.now() - startTime) / 1000); // in seconds
+  timeLeft = Math.max(600 - elapsed, 0); // max 10 mins
+
   expirationTimer = setInterval(() => {
     const min = String(Math.floor(timeLeft / 60)).padStart(2, "0");
     const sec = String(timeLeft % 60).padStart(2, "0");
     timerElement.innerHTML = `<i class="fas fa-hourglass-start"></i> Expires in: ${min}:${sec}`;
     timeLeft--;
+
     if (timeLeft < 0) {
       clearInterval(expirationTimer);
       emails = [];
       renderEmailList();
       timerElement.innerHTML = `<i class="fas fa-clock"></i> Mailbox expired.`;
       showNotification("⏳ Temporary mailbox expired");
+
+      localStorage.removeItem(TIMER_KEY);
+      localStorage.removeItem(EMAIL_KEY);
+
+      generateBtn.disabled = false;
+      generateBtn.classList.remove("disabled");
+      generateBtn.innerHTML =
+        '<i class="fas fa-plus"></i> Generate New Address';
     }
   }, 1000);
 }
@@ -106,7 +129,7 @@ async function showEmailDetail(email) {
   document.getElementById("detail-subject").textContent = email.subject;
   document.getElementById("detail-date").textContent =
     new Date().toLocaleString();
-  document.getElementById("detail-body").textContent = email.content;
+  document.getElementById("detail-body").innerHTML = email.content;
 }
 
 // 🧹 Render email list
@@ -176,14 +199,44 @@ function showNotification(message) {
   setTimeout(() => notification.classList.remove("show"), 3000);
 }
 
-// 🧠 Events
 generateBtn.addEventListener("click", () => {
+  const history = JSON.parse(localStorage.getItem(LIMIT_KEY) || "[]");
+  const now = Date.now();
+
+  // Remove entries older than 30 mins
+  const recent = history.filter(t => now - t < LIMIT_WINDOW);
+
+  // If limit reached, block generation
+  if (recent.length >= MAX_EMAILS) {
+    showNotification("🚫 Limit reached: Wait before generating more emails.");
+    return;
+  }
+
+  // ✅ Allow generation
+  recent.push(now);
+  localStorage.setItem(LIMIT_KEY, JSON.stringify(recent));
+
+  // 🔒 Lock the button
+  generateBtn.disabled = true;
+  generateBtn.classList.add("disabled");
+  generateBtn.innerHTML = '<i class="fas fa-lock"></i> Locked for 10 min';
+
+  // 👇 Call API
   createTempAccount();
-  generateBtn.innerHTML = '<i class="fas fa-check"></i> Generated!';
+
+  // Visual update
   setTimeout(() => {
-    generateBtn.innerHTML = '<i class="fas fa-plus"></i> Generate New Address';
+    generateBtn.innerHTML = '<i class="fas fa-lock"></i> Locked';
   }, 1500);
+
+  // Optional: unlock after 10 minutes
+  setTimeout(() => {
+    generateBtn.disabled = false;
+    generateBtn.classList.remove("disabled");
+    generateBtn.innerHTML = '<i class="fas fa-plus"></i> Generate New Address';
+  }, 600_000); // 10 minutes
 });
+
 
 refreshBtn.addEventListener("click", () => {
   refreshBtn.innerHTML = '<i class="fas fa-sync-alt fa-spin"></i> Refreshing';
@@ -246,7 +299,7 @@ document.addEventListener("DOMContentLoaded", () => {
       chars.charAt((Math.random() * chars.length) | 0)
     ).join("");
   }
-  
+
   // Modal handler factory
   function setupModal(openId, modalId, closeId) {
     const btn = document.getElementById(openId);
@@ -280,3 +333,13 @@ document.addEventListener("DOMContentLoaded", () => {
     setupModal("open" + name, name.toLowerCase() + "Modal", "close" + name)
   );
 });
+const storedStart = localStorage.getItem(TIMER_KEY);
+const storedEmail = localStorage.getItem(EMAIL_KEY);
+
+if (storedStart && storedEmail) {
+  generatedEmail.textContent = storedEmail;
+  generateBtn.disabled = true;
+  generateBtn.classList.add("disabled");
+  generateBtn.innerHTML = '<i class="fas fa-lock"></i> Locked';
+  startTimer();
+}
