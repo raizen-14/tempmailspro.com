@@ -1046,3 +1046,8 @@
             font-size: 0.8rem;
         }
     }
+#generate-btn.disabled {
+  opacity: 0.6;
+  pointer-events: none;
+  cursor: not-allowed;
+}
